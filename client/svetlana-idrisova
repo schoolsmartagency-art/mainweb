@@ -1458,7 +1458,7 @@
     <h1>Химия<br><em>легко и на высокий балл</em></h1>
     <p class="hero-desc">15 лет опыта подготовки к ОГЭ и ЕГЭ по химии. Высший балл ученицы — 99, у большинства результат от 85 и выше. Занятия онлайн для учеников 9–11 классов из Кабардино-Балкарии и любого региона России.</p>
     <div class="hero-photo-mobile">
-      <img id="hero-tutor-photo-mobile" src="images/svetlana-idrisova/svetlana-hero.png" alt="Светлана Идрисова — репетитор по химии">
+      <img id="hero-tutor-photo-mobile" src="images/svetlana-idrisova/svetlana-hero.jpg" alt="Светлана Идрисова — репетитор по химии">
     </div>
     <div class="hero-btns">
       <a href="#form" class="btn-primary">Записаться на пробное занятие</a>
@@ -1483,7 +1483,7 @@
       </div>
     </div>
     <div class="avatar-frame">
-      <img id="hero-tutor-photo" class="avatar-photo" src="images/svetlana-idrisova/svetlana-hero.png" alt="Светлана Идрисова — репетитор по химии">
+      <img id="hero-tutor-photo" class="avatar-photo" src="images/svetlana-idrisova/svetlana-hero.jpg" alt="Светлана Идрисова — репетитор по химии">
     </div>
     <div class="stat-badges right">
       <div class="stat-badge">
@@ -1502,7 +1502,7 @@
 <section id="about">
   <div class="about-grid fade-in">
     <div class="about-photo-wrap">
-      <img id="about-tutor-photo" src="images/svetlana-idrisova/svetlana-about.png" alt="Светлана Идрисова на занятии">
+      <img id="about-tutor-photo" src="images/svetlana-idrisova/svetlana-about.jpg" alt="Светлана Идрисова на занятии">
     </div>
     <div class="about-text">
       <h2 class="section-title">Опыт, которому<br><em>можно доверять</em></h2>
@@ -1552,18 +1552,37 @@
  <!-- Photo reviews grid — материалы добавляются после получения от клиента -->
 <div class="reviews-photos-wrapper fade-in">
   <div class="reviews-photos-grid" id="reviewsPhotoGrid">
-    <!-- TODO: добавить блоки .review-photo-item с отзывами, когда придут материалы -->
+      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-bagautdinova-malika.jpg" alt="Отзыв — Багаутдинова Малика, 90 баллов" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-kurdanova-diana.jpg" alt="Отзыв — Курданова Диана, ОГЭ 5" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-balaeva-zhamilya.jpg" alt="Отзыв — Балаева Жамиля, 38 баллов" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-dzhappueva-leylya.jpg" alt="Отзыв — Джаппуева Лейля, 48 баллов" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-aliya-9class.jpg" alt="Отзыв — Джаппуева Алия, ОГЭ 5" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-kitnikova-darya.jpg" alt="Отзыв — Китникова Дарья, 60 баллов" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-shogenova-dayana.jpg" alt="Отзыв — Шогенова Даяна, 84 балла" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-balaeva-talifa.jpg" alt="Отзыв — Балаева Талифа, 62 балла" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-kudaev-akhmat-ali.jpg" alt="Отзыв — Кудаев Ахмат-Али" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-dzhurtubaeva-kamila.jpg" alt="Отзыв — Джуртубаева Камила, 68 баллов" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-bulakhova-samira.jpg" alt="Отзыв — Булахова Самира, ОГЭ 5" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-kudaeva-mariam.jpg" alt="Отзыв — Кудаева Мариям, 77 баллов" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-rakhaeva-aliya.jpg" alt="Отзыв — Рахаева Алия, 77 баллов" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-zalikhanova-marianna.jpg" alt="Отзыв — Залиханова Марианна, 80 баллов" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-frieva-amina.jpg" alt="Отзыв — Фриева Амина, 88 баллов" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-murachaev-aubekir.jpg" alt="Отзыв — Мурачаев Аубекир, 93 балла" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-bayzulaeva-leyla.jpg" alt="Отзыв — Байзулаева Лейла, 91 балл" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-saidova-elvina.jpg" alt="Отзыв — Саидова Эльвина, 93 балла" loading="lazy"></div>
   </div>
   <div class="reviews-fade-overlay"></div>
 </div>
 
-  <!-- Video reviews -->
-  <div class="video-reviews-section fade-in">
-    <h3 class="video-reviews-title">Видео-отзывы</h3>
-    <div class="video-reviews-grid">
-      <!-- TODO: добавить блоки .video-review-wrap с видео-отзывами, когда придут материалы -->
-    </div>
-  </div>
+<!-- Кнопка «Смотреть все отзывы» -->
+<div class="reviews-cta fade-in" id="reviewsCtaWrapper">
+  <button class="btn-outline" id="reviewsToggleBtn">
+    Смотреть все отзывы
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+</div>
+
+  <!-- Video reviews: добавится отдельным разделом, когда придут материалы -->
 </section>
 
 <!-- DIPLOMAS -->
@@ -1573,7 +1592,13 @@
     <p class="section-sub">Высшее образование, высшая квалификационная категория, курсы повышения квалификации</p>
   </div>
   <div class="reviews-grid fade-in" id="diplomasGrid">
-    <!-- TODO: добавить блоки .review-screenshot-card с фото дипломов, когда придут материалы -->
+    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-bachelor.jpg" alt="Диплом бакалавра" loading="lazy"></div>
+    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-master.jpg" alt="Диплом магистра" loading="lazy"></div>
+    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-teacher-cert.jpg" alt="Диплом преподавателя высшей школы" loading="lazy"></div>
+    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-certificates.jpg" alt="Удостоверения о повышении квалификации" loading="lazy"></div>
+    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-award-1.jpg" alt="Грамота" loading="lazy"></div>
+    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-award-2.jpg" alt="Грамота" loading="lazy"></div>
+    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-group.jpg" alt="Дипломы" loading="lazy"></div>
   </div>
 </section>
 
@@ -1735,8 +1760,8 @@
 
 <script>
   (function loadMedia() {
-    const heroPhoto = 'images/svetlana-idrisova/svetlana-hero.png';
-    const aboutPhoto = 'images/svetlana-idrisova/svetlana-about.png';
+    const heroPhoto = 'images/svetlana-idrisova/svetlana-hero.jpg';
+    const aboutPhoto = 'images/svetlana-idrisova/svetlana-about.jpg';
     const fallbackPhoto = heroPhoto;
 
     function setImage(img, url, loading) {
