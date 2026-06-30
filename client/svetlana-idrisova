@@ -1480,6 +1480,8 @@
     border: 2px solid var(--teal-100);
     box-shadow: var(--shadow);
     background: var(--teal-800);
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
   }
   .video-review-wrap iframe {
     width: 100%;
