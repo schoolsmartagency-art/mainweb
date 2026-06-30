@@ -1582,8 +1582,44 @@
   </button>
 </div>
 
-  <!-- Video reviews: добавится отдельным разделом, когда придут материалы -->
+  <!-- Video reviews -->
+  <div class="video-reviews-section fade-in">
+    <h3 class="video-reviews-title">Видео-отзывы</h3>
+    <div class="video-reviews-grid">
+      <div class="video-review-wrap" style="aspect-ratio: 100 / 56.25;">
+        <iframe src="https://player.vimeo.com/video/1205844577?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Шаваева Сафия, 58 баллов, 2026 год"></iframe>
+      </div>
+      <div class="video-review-wrap" style="aspect-ratio: 100 / 177.78;">
+        <iframe src="https://player.vimeo.com/video/1205844507?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Хуранова Дарина, 73 балла, 2023 год"></iframe>
+      </div>
+      <div class="video-review-wrap" style="aspect-ratio: 100 / 63.83;">
+        <iframe src="https://player.vimeo.com/video/1205844505?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Ризаева Тамара, 71 балл, 2022 год"></iframe>
+      </div>
+      <div class="video-review-wrap" style="aspect-ratio: 100 / 179.31;">
+        <iframe src="https://player.vimeo.com/video/1205844474?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Курданов Алан, 44 балла, 2025 год"></iframe>
+      </div>
+      <div class="video-review-wrap" style="aspect-ratio: 100 / 177.82;">
+        <iframe src="https://player.vimeo.com/video/1205844464?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Жашуев Алан, 86 баллов, 2025 год"></iframe>
+      </div>
+      <div class="video-review-wrap" style="aspect-ratio: 100 / 150;">
+        <iframe src="https://player.vimeo.com/video/1205844463?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Картлыкова Радима, 65 баллов, 2022 год"></iframe>
+      </div>
+      <div class="video-review-wrap" style="aspect-ratio: 100 / 160;">
+        <iframe src="https://player.vimeo.com/video/1205844358?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Бапинаева Налжан, 42 балла, 2025 год"></iframe>
+      </div>
+      <div class="video-review-wrap" style="aspect-ratio: 100 / 179.31;">
+        <iframe src="https://player.vimeo.com/video/1205844357?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Розикова Алина, 88 баллов, 2025 год"></iframe>
+      </div>
+      <div class="video-review-wrap" style="aspect-ratio: 100 / 56.37;">
+        <iframe src="https://player.vimeo.com/video/1205844355?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Габоева Алия, 93 балла, 2025 год"></iframe>
+      </div>
+      <div class="video-review-wrap" style="aspect-ratio: 100 / 177.78;">
+        <iframe src="https://player.vimeo.com/video/1205844356?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Егорова Анна, 51 балл, 2026 год"></iframe>
+      </div>
+    </div>
+  </div>
 </section>
+<script src="https://player.vimeo.com/api/player.js"></script>
 
 <!-- DIPLOMAS -->
 <section id="diplomas">
