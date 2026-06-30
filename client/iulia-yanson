@@ -818,6 +818,98 @@
     text-align: center;
     margin-top: 1rem;
   }
+  .consent-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--text-soft);
+  }
+  .consent-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    accent-color: var(--teal-400);
+    cursor: pointer;
+  }
+  .consent-row label {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--text-soft);
+    cursor: pointer;
+  }
+  .consent-row a {
+    color: var(--teal-600);
+    text-decoration: underline;
+  }
+  .consent-row.error label { color: #E24B4A; }
+
+  /* POLICY MODAL */
+  .policy-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+  }
+  .policy-modal.open {
+    display: block;
+  }
+  .policy-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 20, 18, 0.55);
+    backdrop-filter: blur(2px);
+  }
+  .policy-modal-dialog {
+    position: relative;
+    max-width: 640px;
+    width: calc(100% - 2.4rem);
+    max-height: calc(100vh - 4rem);
+    margin: 2rem auto;
+    background: var(--bg, #fff);
+    border-radius: 16px;
+    padding: 2rem 1.75rem 1.75rem;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  }
+  .policy-modal-dialog h3 {
+    font-size: 1.2rem;
+    margin: 0 0 0.4rem;
+    padding-right: 2rem;
+  }
+  .policy-modal-meta {
+    font-size: 0.8rem;
+    color: var(--text-soft);
+    margin: 0 0 1.2rem;
+  }
+  .policy-modal-body p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-soft);
+    margin-bottom: 0.9rem;
+  }
+  .policy-modal-body p:last-child {
+    margin-bottom: 0;
+  }
+  .policy-modal-body a {
+    color: var(--teal-600);
+    text-decoration: underline;
+  }
+  .policy-modal-close {
+    position: absolute;
+    top: 1.1rem;
+    right: 1.1rem;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--text-soft);
+    cursor: pointer;
+  }
 
   /* FOOTER */
   footer {
@@ -1464,20 +1556,20 @@
       <div class="review-photo-item"><img src="images/iulia-yanson/review-staritsyna.png" alt="Отзыв — Старицына Елена" loading="lazy"></div>
       <div class="review-photo-item"><img src="images/iulia-yanson/review-polina.png" alt="Отзыв — Полина" loading="lazy"></div>
       <div class="review-photo-item"><img src="images/iulia-yanson/review-afanasyeva.png" alt="Отзыв — Екатерина Афанасьева" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/iulia-yanson/Арсений%20ЕГЭ%20физика%202026.png" alt="Отзыв" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/iulia-yanson/review-arseniy.png" alt="Отзыв" loading="lazy"></div>
     </div>
     <!-- Вторая колонка -->
     <div class="review-col">
-      <div class="review-photo-item"><img src="images/iulia-yanson/Илья%20о%20группе.png" alt="Отзыв" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/iulia-yanson/Ирина.png" alt="Отзыв" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/iulia-yanson/Настя%20jpg.jpg" alt="Отзыв" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/iulia-yanson/Никита.png" alt="Отзыв" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/iulia-yanson/review-ilya-group.png" alt="Отзыв" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/iulia-yanson/review-irina.png" alt="Отзыв" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/iulia-yanson/review-nastya.jpg" alt="Отзыв" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/iulia-yanson/review-nikita.png" alt="Отзыв" loading="lazy"></div>
     </div>
     <!-- Третья колонка -->
     <div class="review-col">
-      <div class="review-photo-item"><img src="images/iulia-yanson/Таисия.jpg" alt="Отзыв" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/iulia-yanson/Тим.png" alt="Отзыв" loading="lazy"></div>
-     <div class="review-photo-item"><img src="images/iulia-yanson/Дарина%20.png" alt="Отзыв" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/iulia-yanson/review-taisiya.jpg" alt="Отзыв" loading="lazy"></div>
+      <div class="review-photo-item"><img src="images/iulia-yanson/review-tim.png" alt="Отзыв" loading="lazy"></div>
+     <div class="review-photo-item"><img src="images/iulia-yanson/review-darina.png" alt="Отзыв" loading="lazy"></div>
     </div>
   </div>
 
@@ -1646,13 +1738,16 @@
         <input type="email" id="email" placeholder="example@mail.ru">
       </div>
     </div>
+    <div class="consent-row">
+      <input type="checkbox" id="consent" required>
+      <label for="consent">Согласен(на) на <a href="#" onclick="return openPolicyModal(event)">обработку персональных данных</a></label>
+    </div>
     <div class="form-submit">
       <button type="button" onclick="submitForm()">
         Записаться на пробный урок
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
       </button>
     </div>
-    <p class="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных</p>
   </div>
 </section>
 
@@ -1679,6 +1774,24 @@
 <div class="toast" id="toast">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
   Заявка отправлена! Свяжемся с вами сегодня.
+</div>
+
+<div class="policy-modal" id="policyModal">
+  <div class="policy-modal-overlay" onclick="closePolicyModal(event)"></div>
+  <div class="policy-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="policyModalTitle">
+    <button type="button" class="policy-modal-close" onclick="closePolicyModal(event)" aria-label="Закрыть">&times;</button>
+    <h3 id="policyModalTitle">Политика обработки персональных данных</h3>
+    <p class="policy-modal-meta">Юлия Янсон, репетитор по физике и математике · последнее обновление: 30 июня 2026 г.</p>
+    <div class="policy-modal-body">
+      <p>Настоящая Политика определяет порядок обработки и защиты персональных данных, которые Вы оставляете при заполнении формы записи на сайте, а также правила их использования.</p>
+      <p><strong>1. Какие данные собираются.</strong> Имя и фамилия ученика, класс, изучаемый предмет, цель занятий, имя и отчество родителя, номер телефона, адрес электронной почты — то есть данные, которые Вы добровольно указываете в форме.</p>
+      <p><strong>2. Цель обработки.</strong> Данные используются исключительно для связи с Вами, обсуждения формата и расписания занятий, проведения пробного урока и дальнейшего сотрудничества по репетиторству.</p>
+      <p><strong>3. Передача третьим лицам.</strong> Данные не передаются и не продаются третьим лицам, за исключением сервисов, технически обеспечивающих приём и хранение заявок (например, почтовые сервисы и мессенджеры, через которые Вы соглашаетесь получить ответ).</p>
+      <p><strong>4. Срок хранения.</strong> Данные хранятся не дольше, чем это необходимо для целей связи и организации занятий, и удаляются по Вашему запросу.</p>
+      <p><strong>5. Ваши права.</strong> Вы можете в любой момент запросить уточнение, блокировку или удаление своих данных, а также отозвать согласие на их обработку, написав в Telegram <a href="https://t.me/fizika_o_Jizni" target="_blank" rel="noopener noreferrer">@fizika_o_Jizni</a>.</p>
+      <p>Заполняя и отправляя форму на сайте, Вы подтверждаете своё согласие на обработку указанных персональных данных на условиях настоящей Политики.</p>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -1836,6 +1949,20 @@
 
   document.addEventListener('click', closeAllSelects);
 
+  // Policy modal
+  function openPolicyModal(e) {
+    if (e) e.preventDefault();
+    document.getElementById('policyModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    return false;
+  }
+  function closePolicyModal(e) {
+    if (e) e.preventDefault();
+    document.getElementById('policyModal').classList.remove('open');
+    document.body.style.overflow = '';
+    return false;
+  }
+
   // Form submit
   function submitForm() {
     const fields = ['student_name','student_last','grade','subject','parent_name','phone'];
@@ -1852,8 +1979,16 @@
         else el.style.borderColor = '';
       }
     });
+    const consent = document.getElementById('consent');
+    const consentRow = consent.closest('.consent-row');
+    if (!consent.checked) {
+      consentRow.classList.add('error');
+      valid = false;
+    } else {
+      consentRow.classList.remove('error');
+    }
     if (!valid) {
-      alert('Пожалуйста, заполните все обязательные поля.');
+      alert('Пожалуйста, заполните все обязательные поля и подтвердите согласие на обработку данных.');
       return;
     }
     const toast = document.getElementById('toast');
@@ -1862,6 +1997,7 @@
     // Reset
     document.querySelectorAll('#form input, #form textarea').forEach(el => el.value = '');
     document.querySelectorAll('#form select').forEach(resetCustomSelect);
+    consent.checked = false;
   }
 // Toggle reviews — показать все / свернуть
 const toggleBtn = document.getElementById('reviewsToggleBtn');
