@@ -309,7 +309,10 @@
     padding: 96px var(--page-padding);
   }
   #about, #diplomas { background: var(--teal-50); }
-  #reviews, #services, #form { background: var(--white); }
+  #services { background: var(--white); }
+  #form {
+    background: linear-gradient(135deg, var(--teal-800) 0%, var(--teal-600) 60%, var(--teal-400) 100%);
+  }
   .section-label {
     display: inline-block;
     background: var(--teal-50);
@@ -475,7 +478,7 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    max-width: 880px;
+    max-width: 960px;
     margin: 0 auto;
   }
   .format-row {
@@ -644,6 +647,8 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 1.25rem;
+    max-width: 960px;
+    margin: 0 auto;
   }
   .review-screenshot-card {
     display: flex;
@@ -693,11 +698,16 @@
   }
 
   /* FORM */
+  #form .section-title,
+  #form .section-sub { color: rgba(255,255,255,0.92); }
+  #form .section-title em { color: var(--mint); font-style: italic; }
+  #form .section-label { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.85); }
   .form-section {
     background: white;
     border-radius: 24px;
     padding: 4rem var(--page-padding);
-    border: 1px solid var(--border);
+    border: none;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.25);
     max-width: 800px;
     margin: 0 auto;
     width: 100%;
@@ -926,18 +936,16 @@
     width: calc(100% - 2.4rem);
     max-height: calc(100vh - 4rem);
     margin: 2rem auto;
-    background: var(--bg, #fff);
+    background: #ffffff;
     border-radius: 16px;
     padding: 2rem 1.75rem 1.75rem;
     overflow-y: auto;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
     transform: scale(0.94) translateY(16px);
-    opacity: 0;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .policy-modal.open .policy-modal-dialog {
     transform: scale(1) translateY(0);
-    opacity: 1;
   }
   .policy-modal-dialog h3 {
     font-size: 1.2rem;
@@ -1394,7 +1402,17 @@
 /* REVIEWS — колонки, картинки прижаты друг к другу сверху, с затемнением внизу */
 .reviews-photos-wrapper {
   position: relative;
-  margin-bottom: 0; /* убираем отступ снизу, чтобы кнопка была ближе */
+  margin-bottom: 0;
+}
+
+.reviews-photos-wrapper:not(.expanded)::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 140px;
+  background: linear-gradient(to bottom, transparent, var(--bg) 85%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .reviews-photos-grid {
@@ -1418,7 +1436,7 @@
 }
 
 .review-photo-item {
-  background: var(--teal-50);
+  background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
@@ -1441,7 +1459,7 @@
   font-size: 0.78rem;
   font-weight: 500;
   color: var(--teal-600);
-  background: linear-gradient(to bottom, transparent, var(--teal-50) 55%);
+  background: linear-gradient(to bottom, transparent, var(--white) 55%);
   padding-top: 1.2rem;
   pointer-events: none;
 }
@@ -1565,14 +1583,16 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    overflow: visible;
   }
   .video-reviews-grid {
     display: flex;
     gap: 1.25rem;
     overflow-x: auto;
+    overflow-y: visible;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    padding: 1rem 0.5rem 1.5rem;
+    padding: 2rem 0.75rem 2.5rem;
     scrollbar-width: none;
   }
   .video-reviews-grid::-webkit-scrollbar { display: none; }
@@ -1587,6 +1607,7 @@
     box-shadow: var(--shadow);
     background: var(--teal-800);
     position: relative;
+    cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   .video-review-wrap.playing {
@@ -1626,23 +1647,6 @@
     opacity: 0.85;
     margin-top: 0.15rem;
   }
-  .video-play-btn {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(255,255,255,0.92);
-    color: var(--teal-600);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-    transition: transform 0.2s, background 0.2s;
-  }
-  .video-play-btn:hover { background: white; transform: translate(-50%, -50%) scale(1.08); }
   .video-carousel-arrow {
     flex: 0 0 auto;
     width: 48px;
@@ -1660,10 +1664,13 @@
   }
   .video-carousel-arrow:hover { background: var(--teal-600); transform: translateY(-2px); }
   .video-carousel-arrow:disabled {
-    opacity: 0.3;
+    background: var(--teal-100);
+    color: var(--teal-400);
+    opacity: 0.5;
     cursor: default;
     pointer-events: none;
     transform: none;
+    box-shadow: none;
   }
 
   /* Bigger mobile photo */
@@ -1887,39 +1894,25 @@
       <div class="video-reviews-grid" id="videoCarouselTrack">
       <div class="video-review-wrap">
         <iframe src="https://player.vimeo.com/video/1205844507?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Хуранова Дарина, 73 балла, 2023 год"></iframe>
-        <div class="video-overlay"><div class="video-overlay-name">Хуранова Дарина<span>73 балла · 2023 год</span></div></div>
-        <button type="button" class="video-play-btn" aria-label="Воспроизвести"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
-      </div>
+        <div class="video-overlay"><div class="video-overlay-name">Хуранова Дарина<span>73 балла · 2023 год</span></div></div>      </div>
       <div class="video-review-wrap">
         <iframe src="https://player.vimeo.com/video/1205844474?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Курданов Алан, 44 балла, 2025 год"></iframe>
-        <div class="video-overlay"><div class="video-overlay-name">Курданов Алан<span>44 балла · 2025 год</span></div></div>
-        <button type="button" class="video-play-btn" aria-label="Воспроизвести"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
-      </div>
+        <div class="video-overlay"><div class="video-overlay-name">Курданов Алан<span>44 балла · 2025 год</span></div></div>      </div>
       <div class="video-review-wrap">
         <iframe src="https://player.vimeo.com/video/1205844464?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Жашуев Алан, 86 баллов, 2025 год"></iframe>
-        <div class="video-overlay"><div class="video-overlay-name">Жашуев Алан<span>86 баллов · 2025 год</span></div></div>
-        <button type="button" class="video-play-btn" aria-label="Воспроизвести"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
-      </div>
+        <div class="video-overlay"><div class="video-overlay-name">Жашуев Алан<span>86 баллов · 2025 год</span></div></div>      </div>
       <div class="video-review-wrap">
         <iframe src="https://player.vimeo.com/video/1205844463?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Картлыкова Радима, 65 баллов, 2022 год"></iframe>
-        <div class="video-overlay"><div class="video-overlay-name">Картлыкова Радима<span>65 баллов · 2022 год</span></div></div>
-        <button type="button" class="video-play-btn" aria-label="Воспроизвести"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
-      </div>
+        <div class="video-overlay"><div class="video-overlay-name">Картлыкова Радима<span>65 баллов · 2022 год</span></div></div>      </div>
       <div class="video-review-wrap">
         <iframe src="https://player.vimeo.com/video/1205844358?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Бапинаева Налжан, 42 балла, 2025 год"></iframe>
-        <div class="video-overlay"><div class="video-overlay-name">Бапинаева Налжан<span>42 балла · 2025 год</span></div></div>
-        <button type="button" class="video-play-btn" aria-label="Воспроизвести"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
-      </div>
+        <div class="video-overlay"><div class="video-overlay-name">Бапинаева Налжан<span>42 балла · 2025 год</span></div></div>      </div>
       <div class="video-review-wrap">
         <iframe src="https://player.vimeo.com/video/1205844357?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Розикова Алина, 88 баллов, 2025 год"></iframe>
-        <div class="video-overlay"><div class="video-overlay-name">Розикова Алина<span>88 баллов · 2025 год</span></div></div>
-        <button type="button" class="video-play-btn" aria-label="Воспроизвести"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
-      </div>
+        <div class="video-overlay"><div class="video-overlay-name">Розикова Алина<span>88 баллов · 2025 год</span></div></div>      </div>
       <div class="video-review-wrap">
         <iframe src="https://player.vimeo.com/video/1205844356?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Егорова Анна, 51 балл, 2026 год"></iframe>
-        <div class="video-overlay"><div class="video-overlay-name">Егорова Анна<span>51 балл · 2026 год</span></div></div>
-        <button type="button" class="video-play-btn" aria-label="Воспроизвести"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
-      </div>
+        <div class="video-overlay"><div class="video-overlay-name">Егорова Анна<span>51 балл · 2026 год</span></div></div>      </div>
       </div>
       <button type="button" class="video-carousel-arrow" id="videoCarouselNext" aria-label="Вперёд">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
@@ -2356,13 +2349,11 @@
     updateArrowState();
   })();
 
-  // Video reviews — play overlay, enlarge on play
+  // Video reviews — click anywhere on card to play
   document.querySelectorAll('.video-review-wrap').forEach(wrap => {
-    const btn = wrap.querySelector('.video-play-btn');
     const iframe = wrap.querySelector('iframe');
-    if (!btn || !iframe) return;
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
+    if (!iframe) return;
+    wrap.addEventListener('click', () => {
       if (wrap.classList.contains('playing')) return;
       document.querySelectorAll('.video-review-wrap.playing').forEach(w => w.classList.remove('playing'));
       if (!iframe.src.includes('autoplay=1')) {
@@ -2453,6 +2444,7 @@
 const toggleBtn = document.getElementById('reviewsToggleBtn');
 const photoGrid = document.getElementById('reviewsPhotoGrid');
 const ctaWrapper = document.getElementById('reviewsCtaWrapper');
+const photosWrapper = document.querySelector('.reviews-photos-wrapper');
 let expanded = false;
 
 if (toggleBtn && photoGrid && ctaWrapper) {
@@ -2460,12 +2452,11 @@ if (toggleBtn && photoGrid && ctaWrapper) {
     expanded = !expanded;
     photoGrid.classList.toggle('expanded', expanded);
     toggleBtn.classList.toggle('is-expanded', expanded);
+    if (photosWrapper) photosWrapper.classList.toggle('expanded', expanded);
 
     if (expanded) {
-      // Развернуто — скрываем кнопку
       ctaWrapper.classList.add('hidden');
     } else {
-      // Свернуто — показываем кнопку (по сути никогда не сработает, т.к. кнопка скрыта)
       ctaWrapper.classList.remove('hidden');
     }
   });
