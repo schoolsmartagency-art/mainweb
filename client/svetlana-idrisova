@@ -6,7 +6,7 @@
 <title>Светлана Идрисова — репетитор по химии</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --teal-50: #F4EEFB;
@@ -23,7 +23,7 @@
     --text-soft: #5C5266;
     --text-muted: #8A8094;
     --border: rgba(122,93,168,0.14);
-    --font-display: 'Playfair Display', Georgia, serif;
+    --font-display: 'PT Serif', Georgia, serif;
     --font-body: 'Geologica', sans-serif;
     --radius: 16px;
     --shadow: 0 4px 32px rgba(122,93,168,0.10);
@@ -269,8 +269,8 @@
     flex-direction: column;
     gap: 1rem;
   }
-  .stat-badges.left { left: -30px; top: 50%; transform: translateY(-50%); }
-  .stat-badges.right { right: -30px; top: 40%; transform: translateY(-50%); }
+  .stat-badges.left { left: -10px; top: 50%; transform: translateY(-50%); }
+  .stat-badges.right { right: -10px; top: 40%; transform: translateY(-50%); }
   .stat-badge {
     background: white;
     border: 1px solid var(--border);
@@ -379,51 +379,6 @@
     font-style: italic;
   }
 
-  /* RESULTS STATS */
-  .stats-bg {
-    background: var(--teal-800);
-    color: white;
-    padding: 80px var(--page-padding);
-  }
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-    margin-top: 2.5rem;
-  }
-  .stat-card {
-    text-align: center;
-    padding: 2rem 1.5rem;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: var(--radius);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .stat-num {
-    font-family: var(--font-body);
-    font-size: 3rem;
-    font-weight: 600;
-    color: var(--mint);
-    line-height: 1;
-    height: 3.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
-    font-variant-numeric: tabular-nums;
-  }
-  .stat-label {
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.65);
-    line-height: 1.4;
-    font-weight: 300;
-    margin: 0;
-  }
-  .stats-bg .section-title { color: white; }
-  .stats-bg .section-sub { color: rgba(255,255,255,0.65); }
-  .stats-bg .section-label { background: rgba(255,255,255,0.1); color: var(--mint); border-color: rgba(255,255,255,0.2); }
 
   /* SERVICES */
   .services-grid {
@@ -594,12 +549,18 @@
 
   /* REVIEWS */
   .reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
     gap: 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.5rem;
+    scrollbar-width: thin;
   }
   .review-screenshot-card {
     display: block;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    height: 360px;
     background: white;
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -613,8 +574,10 @@
     box-shadow: 0 8px 32px rgba(122,93,168,0.14);
   }
   .review-screenshot-card img {
-    width: 100%;
-    height: auto;
+    width: auto;
+    max-width: 100%;
+    height: 100%;
+    object-fit: contain;
     display: block;
   }
   .reviews-cta {
@@ -1006,11 +969,14 @@
     color: white;
     text-align: center;
     text-decoration: none;
-    padding: 0.95rem 1.5rem;
+    padding: 0.95rem 1rem;
     border-radius: 40px;
     font-family: var(--font-body);
     font-size: 1rem;
     font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     box-shadow: 0 4px 20px rgba(155,127,199,0.28);
   }
   .sticky-cta-btn:hover { background: var(--teal-600); }
@@ -1069,7 +1035,6 @@
     .avatar-frame { width: 300px; height: 360px; }
     .stat-badges.left { left: -10px; }
     .stat-badges.right { right: -10px; }
-    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
     .steps-grid { grid-template-columns: repeat(2, 1fr); }
     .steps-grid::before { display: none; }
     .services-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1150,12 +1115,6 @@
     .about-text { order: 1; }
     .about-photo-wrap { order: 2; max-width: 320px; margin: 0 auto; width: 100%; }
 
-    /* STATS */
-    .stats-bg { padding: 56px var(--page-padding); }
-    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-    .stat-num { font-size: 2.2rem; height: 2.75rem; margin-bottom: 1rem; }
-    .stat-card { padding: 1.25rem 1rem; }
-
     /* SERVICES */
     .services-grid { grid-template-columns: 1fr; }
 
@@ -1196,7 +1155,7 @@
     .step-content h4 { margin-bottom: 0.35rem; }
 
     /* REVIEWS */
-    .reviews-grid { grid-template-columns: 1fr; }
+    .review-screenshot-card { height: 280px; }
 
     .form-title em { display: block; }
 
@@ -1228,8 +1187,8 @@
   /* EXTRA SMALL < 400px */
   @media (max-width: 400px) {
     .hero h1 { font-size: 1.9rem; }
-    .stats-grid { grid-template-columns: 1fr 1fr; }
     .hero-stats-mobile { grid-template-columns: 1fr 1fr; }
+    .sticky-cta-btn { font-size: 0.88rem; padding: 0.95rem 0.5rem; }
   }
 
   /* REVIEWS — колонки, картинки прижаты друг к другу сверху, с затемнением внизу */
@@ -1244,7 +1203,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 1.25rem;
   align-items: start;
-  max-height: 380px; /* было 580 — теперь видно меньше (~1–1,5 ряда) */
+  max-height: 620px;
   overflow: hidden;
   transition: max-height 0.5s ease;
 }
@@ -1285,7 +1244,7 @@
   overflow: hidden;
   box-shadow: var(--shadow);
   transition: transform 0.2s, box-shadow 0.2s;
-  line-height: 0;
+  padding: 1.25rem;
 }
 
 .review-photo-item:hover {
@@ -1293,10 +1252,38 @@
   box-shadow: 0 8px 32px rgba(122,93,168,0.14);
 }
 
-.review-photo-item img {
-  width: 100%;
-  height: auto;
+.review-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.review-avatar {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  object-fit: cover;
   display: block;
+}
+
+.review-name {
+  font-weight: 500;
+  color: var(--text);
+  font-size: 0.98rem;
+}
+
+.review-meta {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.1rem;
+}
+
+.review-text {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-soft);
 }
 
 /* Кнопка — теперь ближе к картинкам */
@@ -1339,7 +1326,7 @@
   .reviews-photos-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.85rem;
-    max-height: 320px; /* меньше на мобилках */
+    max-height: 480px;
   }
   .review-col {
     gap: 0.85rem;
@@ -1355,7 +1342,7 @@
 @media (max-width: 480px) {
   .reviews-photos-grid {
     grid-template-columns: 1fr;
-    max-height: 380px;
+    max-height: 520px;
   }
   .review-col {
     gap: 0.85rem;
@@ -1376,17 +1363,17 @@
     margin-bottom: 1.5rem;
   }
   .video-reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    column-count: 2;
+    column-gap: 1.5rem;
   }
   .video-review-wrap {
     border-radius: var(--radius);
     overflow: hidden;
     border: 2px solid var(--teal-100);
     box-shadow: var(--shadow);
-    aspect-ratio: 16 / 9;
     background: var(--teal-800);
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
   }
   .video-review-wrap iframe {
     width: 100%;
@@ -1407,7 +1394,7 @@
     }
     /* Video reviews — 1 col on mobile */
     .video-reviews-grid {
-      grid-template-columns: 1fr;
+      column-count: 1;
     }
     .video-reviews-title { font-size: 1.15rem; }
   }
@@ -1506,41 +1493,14 @@
     </div>
     <div class="about-text">
       <h2 class="section-title">Опыт, которому<br><em>можно доверять</em></h2>
-      <p>Меня зовут Идрисова Светлана Валерьевна — репетитор по химии с 15-летним опытом. Готовлю учеников 9, 10 и 11 классов к ОГЭ и ЕГЭ качественно, интенсивно и без зубрёжки: помогаю разобраться в самых сложных темах через понимание, а не заучивание.</p>
+      <p>Идрисова Светлана Валерьевна — репетитор по химии с 15-летним опытом. Готовлю учеников 9–11 классов к ОГЭ и ЕГЭ через понимание, а не зубрёжку.</p>
       <div class="about-highlight">
-        <p>«Химия — это не сложно, если правильно преподносить материал. Моя задача — разрушить миф о том, что химию нужно зубрить.»</p>
+        <p>«Химия — это не сложно, если правильно преподносить материал.»</p>
       </div>
-      <p>Учитель высшей квалификационной категории, высшее образование, постоянно прохожу курсы повышения квалификации. На каждом этапе подготовки оказываю не только методическую, но и психологическую поддержку — это снимает тревогу перед экзаменом у ребёнка и у родителей.</p>
-      <p>За 15 лет — десятки учеников с результатом от 85 баллов и выше, лучший результат — 99 баллов ЕГЭ.</p>
+      <p>Учитель высшей квалификационной категории. За 15 лет — десятки учеников с результатом от 85 баллов и выше, лучший результат — 99 баллов ЕГЭ.</p>
     </div>
   </div>
 </section>
-
-<!-- STATS -->
-<div class="stats-bg">
-  <div>
-    <h2 class="section-title">Цифры говорят сами за себя</h2>
-    <p class="section-sub">Конкретные результаты учеников за 15 лет работы</p>
-  </div>
-  <div class="stats-grid fade-in">
-    <div class="stat-card">
-      <span class="stat-num">99</span>
-      <div class="stat-label">максимальный балл ЕГЭ по химии среди учеников</div>
-    </div>
-    <div class="stat-card">
-      <span class="stat-num">85+</span>
-      <div class="stat-label">типичный результат большинства учеников</div>
-    </div>
-    <div class="stat-card">
-      <span class="stat-num">15</span>
-      <div class="stat-label">лет опыта подготовки к ОГЭ и ЕГЭ</div>
-    </div>
-    <div class="stat-card">
-      <span class="stat-num">0 ₽</span>
-      <div class="stat-label">пробное занятие — бесплатно</div>
-    </div>
-  </div>
-</div>
 
 <!-- REVIEWS (photo + video) -->
 <section id="reviews">
@@ -1552,24 +1512,78 @@
  <!-- Photo reviews grid — материалы добавляются после получения от клиента -->
 <div class="reviews-photos-wrapper fade-in">
   <div class="reviews-photos-grid" id="reviewsPhotoGrid">
-      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-bagautdinova-malika.jpg" alt="Отзыв — Багаутдинова Малика, 90 баллов" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-kurdanova-diana.jpg" alt="Отзыв — Курданова Диана, ОГЭ 5" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-balaeva-zhamilya.jpg" alt="Отзыв — Балаева Жамиля, 38 баллов" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-dzhappueva-leylya.jpg" alt="Отзыв — Джаппуева Лейля, 48 баллов" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-aliya-9class.jpg" alt="Отзыв — Джаппуева Алия, ОГЭ 5" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-kitnikova-darya.jpg" alt="Отзыв — Китникова Дарья, 60 баллов" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-shogenova-dayana.jpg" alt="Отзыв — Шогенова Даяна, 84 балла" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-balaeva-talifa.jpg" alt="Отзыв — Балаева Талифа, 62 балла" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-kudaev-akhmat-ali.jpg" alt="Отзыв — Кудаев Ахмат-Али" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-dzhurtubaeva-kamila.jpg" alt="Отзыв — Джуртубаева Камила, 68 баллов" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-bulakhova-samira.jpg" alt="Отзыв — Булахова Самира, ОГЭ 5" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-kudaeva-mariam.jpg" alt="Отзыв — Кудаева Мариям, 77 баллов" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-rakhaeva-aliya.jpg" alt="Отзыв — Рахаева Алия, 77 баллов" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-zalikhanova-marianna.jpg" alt="Отзыв — Залиханова Марианна, 80 баллов" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-frieva-amina.jpg" alt="Отзыв — Фриева Амина, 88 баллов" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-murachaev-aubekir.jpg" alt="Отзыв — Мурачаев Аубекир, 93 балла" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-bayzulaeva-leyla.jpg" alt="Отзыв — Байзулаева Лейла, 91 балл" loading="lazy"></div>
-      <div class="review-photo-item"><img src="images/svetlana-idrisova/review-saidova-elvina.jpg" alt="Отзыв — Саидова Эльвина, 93 балла" loading="lazy"></div>
+      <div class="review-photo-item">
+        <div class="review-card-head"><img class="review-avatar" src="images/svetlana-idrisova/review-bagautdinova-malika.jpg" alt="Багаутдинова Малика" loading="lazy"><div><div class="review-name">Багаутдинова Малика</div><div class="review-meta">90 баллов · 2026 год</div></div></div>
+        <p class="review-text">Ни разу не пожалела о том, что выбрала именно Светлану Валерьевну, о таком преподавателе можно было только мечтать. Информацию доносит понятно и все раскладывает по полочкам. Уже после нескольких занятий я заметила, что постепенно начинаю влюбляться в химию и понимать ее. Также хочется отдельно рассказать про занятия в группах — я хорошо поладила с ребятами и не чувствую себя где-то хуже них. Наверное даже словами невозможно передать насколько у нас на занятиях приятная атмосфера и все благодаря Светлане Валерьевне.</p>
+      </div>
+      <div class="review-photo-item">
+        <div class="review-card-head"><img class="review-avatar" src="images/svetlana-idrisova/review-kurdanova-diana.jpg" alt="Курданова Диана" loading="lazy"><div><div class="review-name">Курданова Диана</div><div class="review-meta">ОГЭ — 5 · 2026 год</div></div></div>
+        <p class="review-text">Я начала заниматься химией в октябре. До этого со Светланой Валерьевной занимался мой старший брат, и я решила, что тоже хочу сдавать ОГЭ по химии. Когда я впервые пришла на занятия, я поняла, что мне никогда еще не было так комфортно рядом с учителем. Она подарила мне такую любовь к химии, что я была готова ездить на занятия каждый день. Я всем советую записаться на занятия к Светлане Валерьевне и самим убедиться, какая она хорошая и как хорошо знает свой предмет ❤️</p>
+      </div>
+      <div class="review-photo-item">
+        <div class="review-card-head"><img class="review-avatar" src="images/svetlana-idrisova/review-balaeva-zhamilya.jpg" alt="Балаева Жамиля" loading="lazy"><div><div class="review-name">Балаева Жамиля</div><div class="review-meta">38 баллов · 2026 год</div></div></div>
+        <p class="review-text">Хочу выразить благодарность Светлане Валерьевне за дополнительные занятия по химии. Она умеет объяснить даже самый трудный материал простыми словами и без лишнего давления. На уроках всегда спокойная рабочая атмосфера, поэтому заниматься комфортно. Благодаря её помощи я смогла хорошо разобраться в предмете и подтянуть успеваемость. Большое спасибо за труд и терпеливое отношение.</p>
+      </div>
+      <div class="review-photo-item">
+        <div class="review-card-head"><img class="review-avatar" src="images/svetlana-idrisova/review-dzhappueva-leylya.jpg" alt="Джаппуева Лейля" loading="lazy"><div><div class="review-name">Джаппуева Лейля</div><div class="review-meta">48 баллов · 2026 год</div></div></div>
+        <p class="review-text">Здравствуйте, Светлана Валерьевна❤️ Хочу Вас искренне поблагодарить за Ваш труд и профессионализм. Благодаря Вашим занятиям я не только чувствовала себя увереннее на экзамене, но и полюбила этот предмет! Ваш индивидуальный подход к каждому ребенку и доступные объяснения даже самых сложных тем делают обучение увлекательным и понятным. Спасибо Вам за всё! Вы лучший репетитор по химии!!!!!❤️❤️❤️</p>
+      </div>
+      <div class="review-photo-item">
+        <div class="review-card-head"><img class="review-avatar" src="images/svetlana-idrisova/review-aliya-9class.jpg" alt="Джаппуева Алия" loading="lazy"><div><div class="review-name">Джаппуева Алия</div><div class="review-meta">ОГЭ — 5 · 2026 год</div></div></div>
+        <p class="review-text">Весь учебный год я ходила к Светлане Валерьевне на репетиторство по химии, до этого в школе я вообще не понимала этот предмет. Благодаря этим занятиям я улучшила свои навыки и знания, а так же с лёгкостью и уверенностью написала экзамен. Я очень благодарна Светлане Валерьевне за данные мне знания и время!</p>
+      </div>
+      <div class="review-photo-item">
+        <div class="review-card-head"><img class="review-avatar" src="images/svetlana-idrisova/review-kitnikova-darya.jpg" alt="Китникова Дарья" loading="lazy"><div><div class="review-name">Китникова Дарья</div><div class="review-meta">60 баллов · 2026 год</div></div></div>
+        <p class="review-text">Хочу выразить огромную благодарность за занятия 🫶🏻 Заниматься со Светланой Валерьевной — одно удовольствие ❤️ Она потрясающий специалист, который объясняет даже самые сложные темы по химии простым и понятным языком. Атмосфера на занятиях уютная и комфортная, без лишнего стресса и напряжения. Благодаря Светлане Валерьевне я искренне поверила в свои силы и полюбила химию ❤️</p>
+      </div>
+      <div class="review-photo-item">
+        <div class="review-card-head"><img class="review-avatar" src="images/svetlana-idrisova/review-shogenova-dayana.jpg" alt="Шогенова Даяна" loading="lazy"><div><div class="review-name">Шогенова Даяна</div><div class="review-meta">84 балла · 2026 год</div></div></div>
+        <p class="review-text">Светлана Валерьевна, спасибо Вам большое! ❤️ Весь материал вы объяснили мне так доступно, что даже самые сложные темы я поняла и запомнила. Спасибо за Вашу поддержку, за внимание, за все данные мне знания. Благодаря Вам я перестала бояться задавать вопросы, переспрашивать и уточнять. Не знаю, как бы я сдавала экзамены, если бы не Вы.</p>
+      </div>
+      <div class="review-photo-item">
+        <div class="review-card-head"><img class="review-avatar" src="images/svetlana-idrisova/review-balaeva-talifa.jpg" alt="Балаева Талифа" loading="lazy"><div><div class="review-name">Балаева Талифа</div><div class="review-meta">62 балла · 2026 год</div></div></div>
+        <p class="review-text">Светлана Валерьевна, спасибо Вам большое за тот труд и знания, которые Вы вложили в нас. Благодаря занятиям с Вами я начала лучше понимать химию и полюбила этот предмет! Спасибо Вам и за моральную поддержку — с ней мне было намного легче готовиться к экзамену. Ваш индивидуальный подход к каждому и атмосфера на занятиях были самыми лучшими 🥹 Вы самый лучший репетитор по химии!!!❤️❤️❤️❤️</p>
+      </div>
+      <div class="review-photo-item">
+        <div class="review-card-head"><img class="review-avatar" src="images/svetlana-idrisova/review-kudaev-akhmat-ali.jpg" alt="Кудаев Ахмат-Али" loading="lazy"><div><div class="review-name">Кудаев Ахмат-Али</div></div></div>
+        <p class="review-text">С вами занятия мне очень понравились, каждый урок проходили много нового и было очень интересно. Спасибо вам за ваш труд и ваши знания, ваши уроки бесценны! Рекомендую вас как репетитора каждому! 🫂❤️</p>
+      </div>
+      <div class="review-photo-item">
+        <div class="review-card-head"><img class="review-avatar" src="images/svetlana-idrisova/review-dzhurtubaeva-kamila.jpg" alt="Джуртубаева Камила" loading="lazy"><div><div class="review-name">Джуртубаева Камила</div><div class="review-meta">68 баллов · 2026 год</div></div></div>
+        <p class="review-text">Светлана Валерьевна, прозанимавшись с Вами два года, хочу оставить свой честный отзыв. С Вами было очень легко заниматься, я ни чуточку не пожалела, что выбрала именно Вас, так как Вы сумели привить мне любовь к химии❤️ Благодаря Вам я пошла на ЕГЭ без страха и с уверенностью в своих знаниях. Также спасибо Вам большое за то, что Вы были с нами до конца и пришли нас поддержать на ЕГЭ — для нас это было очень важно, спасибо за все❤️❤️❤️</p>
+      </div>
+      <div class="review-photo-item">
+        <div class="review-card-head"><img class="review-avatar" src="images/svetlana-idrisova/review-bulakhova-samira.jpg" alt="Булахова Самира" loading="lazy"><div><div class="review-name">Булахова Самира</div><div class="review-meta">ОГЭ — 5 · 2026 год</div></div></div>
+        <p class="review-text">Светлана Валерьевна, спасибо вам большое за этот год, который вы нас обучали, я очень благодарна вам❤️ Вы замечательный репетитор, благодаря которому я стала понимать химию. Раньше я очень боялась выйти к доске на уроках, но после того как я начала к вам ходить, у меня пропал страх и появилось огромное желание решать задания у доски. Я правда очень благодарна 🫶🏼</p>
+      </div>
+      <div class="review-photo-item">
+        <div class="review-card-head"><img class="review-avatar" src="images/svetlana-idrisova/review-kudaeva-mariam.jpg" alt="Кудаева Мариям" loading="lazy"><div><div class="review-name">Кудаева Мариям</div><div class="review-meta">77 баллов · 2025 год</div></div></div>
+        <p class="review-text">Мне очень нравилось заниматься с Вами! Все темы проходили структурировано: сначала теория, потом практика. Практики было много, и я была уверена, что на экзамене любое задание смогу обдумать и решить. Больше всего нравилось решать цепочки реакций. И даже задачи я полюбила, научилась решать. Спасибо Вам большое за всё ❤️</p>
+      </div>
+      <div class="review-photo-item">
+        <div class="review-card-head"><img class="review-avatar" src="images/svetlana-idrisova/review-rakhaeva-aliya.jpg" alt="Рахаева Алия" loading="lazy"><div><div class="review-name">Рахаева Алия</div><div class="review-meta">77 баллов · 2025 год</div></div></div>
+        <p class="review-text">За 2 года до ЕГЭ я стала искать репетитора по химии и нашла самого лучшего 😁 Раньше химию я не понимала так хорошо, как стала понимать после наших занятий. То, что казалось сложным, становилось элементарным. Я перестала бояться больших и запутанных задач. Этот поток информации, который вы давали, воспитал во мне настоящую дисциплину и стрессоустойчивость. Я смогла поступить в РГПУ им. А.И. Герцена в Санкт-Петербурге на бюджет ❤️</p>
+      </div>
+      <div class="review-photo-item">
+        <div class="review-card-head"><img class="review-avatar" src="images/svetlana-idrisova/review-zalikhanova-marianna.jpg" alt="Залиханова Марианна" loading="lazy"><div><div class="review-name">Залиханова Марианна</div><div class="review-meta">80 баллов · 2022 год</div></div></div>
+        <p class="review-text">Светлана Валерьевна — прекрасный преподаватель и профессионал своего дела. Готовилась с ней к ЕГЭ по химии. После занятий экзамен я сдала на высокий балл, необходимый для поступления в университет. На уроках всегда была комфортная атмосфера, велся строгий разбор всех ошибок и тестов. Вы всегда на связи и отвечаете на возникшие вопросы вне урока — благодаря этому я смогла поступить на бюджет в университет. Очень рекомендую.</p>
+      </div>
+      <div class="review-photo-item">
+        <div class="review-card-head"><img class="review-avatar" src="images/svetlana-idrisova/review-frieva-amina.jpg" alt="Фриева Амина" loading="lazy"><div><div class="review-name">Фриева Амина</div><div class="review-meta">88 баллов · 2022 год · аудио-отзыв</div></div></div>
+        <p class="review-text">Светлана Валерьевна, я вас так сильно люблю, вы бы знали. Если я хотя бы на 20% не буду такая же, как вы — просто соберу свои манатки и уйду из педагогики навсегда, потому что вы просто такое золото, просто изумруд. То, как вы себя ставите и как педагога, и как просто хорошего человека — это так дорого, словами не описать, насколько это ценно. Очень хочу, чтобы у вас всё было прекрасно, как вы захотели бы. И мы с вами не потеряем связь — это главное.</p>
+      </div>
+      <div class="review-photo-item">
+        <div class="review-card-head"><img class="review-avatar" src="images/svetlana-idrisova/review-murachaev-aubekir.jpg" alt="Мурачаев Аубекир" loading="lazy"><div><div class="review-name">Мурачаев Аубекир</div><div class="review-meta">93 балла · 2023 год</div></div></div>
+        <p class="review-text">Со Светланой Валерьевной готовиться к ЕГЭ по химии было одно удовольствие. Она максимально доступно объясняла любые темы, рассказывала про различные механизмы, исключения из правил. За время обучения у меня сложилось ощущение, что мы разобрали абсолютно всю химию школьной программы, а то и больше. Для меня очень важно то, каким добрым, чутким и отзывчивым учителем является Светлана Валерьевна — она помогла поверить в свои силы. Начинайте заниматься с ней, и у вас всё получится.</p>
+      </div>
+      <div class="review-photo-item">
+        <div class="review-card-head"><img class="review-avatar" src="images/svetlana-idrisova/review-bayzulaeva-leyla.jpg" alt="Байзулаева Лейла" loading="lazy"><div><div class="review-name">Байзулаева Лейла</div><div class="review-meta">91 балл · 2023 год</div></div></div>
+        <p class="review-text">Хочу выразить огромную благодарность Светлане Валерьевне за подготовку к ЕГЭ по химии ❤️ Я начала заниматься в 10 классе с огромным страхом перед экзаменом, но с мечтой о медицинском вузе. Не предполагала, что смогу сдать химию на 91 балл! Светлана Валерьевна — не просто репетитор, а наставник с системным подходом: материал дается не через зазубривание, а через понимание сути процессов. Если вы нацелены на серьезный вуз — очень рекомендую. Знания даются «с запасом» на будущее ☺️❤️</p>
+      </div>
+      <div class="review-photo-item">
+        <div class="review-card-head"><img class="review-avatar" src="images/svetlana-idrisova/review-saidova-elvina.jpg" alt="Саидова Эльвина" loading="lazy"><div><div class="review-name">Саидова Эльвина</div><div class="review-meta">93 балла · 2022 год</div></div></div>
+        <p class="review-text">Я студентка 4 курса «Лечебного дела» Медицинской академии КБГУ. В 2022 году сдала ЕГЭ по химии на 93 балла. Подготовку начала в 11 классе под чутким контролем Идрисовой Светланы Валерьевны. За год усердной работы мой результат вырос в 10 раз — первый пробный экзамен я написала на 9 баллов. Светлана Валерьевна — первоклассный преподаватель, прекрасный наставник, но в первую очередь она светлый человек, который заставит поверить в себя. Я убеждена, что именно её бесценная поддержка помогла мне сдать экзамен по химии на отлично!</p>
+      </div>
   </div>
   <div class="reviews-fade-overlay"></div>
 </div>
@@ -1628,13 +1642,13 @@
     <p class="section-sub">Высшее образование, высшая квалификационная категория, курсы повышения квалификации</p>
   </div>
   <div class="reviews-grid fade-in" id="diplomasGrid">
-    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-bachelor.jpg" alt="Диплом бакалавра" loading="lazy"></div>
-    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-master.jpg" alt="Диплом магистра" loading="lazy"></div>
-    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-teacher-cert.jpg" alt="Диплом преподавателя высшей школы" loading="lazy"></div>
-    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-certificates.jpg" alt="Удостоверения о повышении квалификации" loading="lazy"></div>
-    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-award-1.jpg" alt="Грамота" loading="lazy"></div>
-    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-award-2.jpg" alt="Грамота" loading="lazy"></div>
-    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-group.jpg" alt="Дипломы" loading="lazy"></div>
+    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-bachelor.jpg" alt="Диплом бакалавра"></div>
+    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-master.jpg" alt="Диплом магистра"></div>
+    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-teacher-cert.jpg" alt="Диплом преподавателя высшей школы"></div>
+    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-certificates.jpg" alt="Удостоверения о повышении квалификации"></div>
+    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-award-1.jpg" alt="Грамота"></div>
+    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-award-2.jpg" alt="Грамота"></div>
+    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-group.jpg" alt="Дипломы"></div>
   </div>
 </section>
 
