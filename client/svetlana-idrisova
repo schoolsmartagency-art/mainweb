@@ -33,6 +33,13 @@
 
   html { scroll-behavior: smooth; }
 
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--teal-50); }
+  ::-webkit-scrollbar-thumb { background: var(--teal-200); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--teal-400); }
+  * { scrollbar-width: thin; scrollbar-color: var(--teal-200) var(--teal-50); }
+
   body {
     font-family: var(--font-body);
     background: var(--bg);
@@ -98,6 +105,24 @@
   }
   .nav-cta:hover { background: var(--teal-600) !important; color: white !important; }
 
+  /* HERO ENTRANCE ANIMATIONS */
+  @keyframes hero-fade-up {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes hero-fade-in {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes hero-slide-in {
+    from { opacity: 0; transform: translateX(32px) translateY(-50%); }
+    to { opacity: 1; transform: translateX(0) translateY(-50%); }
+  }
+  @keyframes hero-slide-in-left {
+    from { opacity: 0; transform: translateX(-32px) translateY(-50%); }
+    to { opacity: 1; transform: translateX(0) translateY(-50%); }
+  }
+
   /* HERO */
   .hero {
     min-height: 100vh;
@@ -129,7 +154,7 @@
     letter-spacing: 0.06em;
     text-transform: uppercase;
     margin-bottom: 1.5rem;
-    animation: tag-blink 2s ease-in-out infinite;
+    animation: hero-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.05s both, tag-blink 2s ease-in-out 1.5s infinite;
   }
   @keyframes tag-blink {
     0%, 100% {
@@ -151,6 +176,7 @@
     line-height: 1.15;
     margin-bottom: 1.5rem;
     color: var(--text);
+    animation: hero-fade-up 0.7s cubic-bezier(0.22,1,0.36,1) 0.15s both;
   }
   .hero h1 em {
     color: var(--teal-400);
@@ -160,6 +186,7 @@
     color: var(--text-soft);
     font-size: 1.05rem;
     margin-bottom: 2rem;
+    animation: hero-fade-up 0.7s cubic-bezier(0.22,1,0.36,1) 0.28s both;
     max-width: 480px;
     font-weight: 300;
     line-height: 1.8;
@@ -168,6 +195,7 @@
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    animation: hero-fade-up 0.7s cubic-bezier(0.22,1,0.36,1) 0.4s both;
   }
   .btn-primary {
     background: var(--teal-400);
@@ -210,6 +238,8 @@
     overflow: hidden;
     position: relative;
     border: 2px solid var(--teal-100);
+    animation: hero-fade-in 1s cubic-bezier(0.22,1,0.36,1) 0.2s both;
+    will-change: transform;
   }
   .avatar-photo {
     width: 100%;
@@ -275,8 +305,14 @@
     flex-direction: column;
     gap: 1rem;
   }
-  .stat-badges.left { left: -10px; top: 50%; transform: translateY(-50%); }
-  .stat-badges.right { right: -10px; top: 40%; transform: translateY(-50%); }
+  .stat-badges.left {
+    left: -10px; top: 50%; transform: translateY(-50%);
+    animation: hero-slide-in-left 0.7s cubic-bezier(0.22,1,0.36,1) 0.55s both;
+  }
+  .stat-badges.right {
+    right: -10px; top: 40%; transform: translateY(-50%);
+    animation: hero-slide-in 0.7s cubic-bezier(0.22,1,0.36,1) 0.65s both;
+  }
   .stat-badge {
     background: white;
     border: 1px solid var(--border);
@@ -643,10 +679,16 @@
   }
 
   /* DIPLOMAS — card catalog, all visible at once, click to zoom */
+  #diplomas .section-header, #services .section-header {
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3.5rem;
+  }
   .reviews-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
     max-width: 960px;
     margin: 0 auto;
   }
@@ -654,7 +696,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 200px;
+    height: 260px;
     background: white;
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -916,13 +958,13 @@
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+    transition: opacity 0.15s ease, visibility 0s linear 0.15s;
   }
   .policy-modal.open {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    transition: opacity 0.25s ease;
+    transition: opacity 0.15s ease;
   }
   .policy-modal-overlay {
     position: absolute;
@@ -1361,8 +1403,8 @@
     .step-content h4 { margin-bottom: 0.35rem; }
 
     /* DIPLOMAS */
-    .reviews-grid { grid-template-columns: repeat(3, 1fr); gap: 0.85rem; }
-    .review-screenshot-card { height: 130px; }
+    .reviews-grid { grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
+    .review-screenshot-card { height: 160px; }
 
     .form-title em { display: block; }
 
@@ -1436,7 +1478,7 @@
 }
 
 .review-photo-item {
-  background: var(--white);
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
@@ -1459,7 +1501,7 @@
   font-size: 0.78rem;
   font-weight: 500;
   color: var(--teal-600);
-  background: linear-gradient(to bottom, transparent, var(--white) 55%);
+  background: linear-gradient(to bottom, transparent, var(--bg) 55%);
   padding-top: 1.2rem;
   pointer-events: none;
 }
@@ -1589,10 +1631,8 @@
     display: flex;
     gap: 1.25rem;
     overflow-x: auto;
-    overflow-y: visible;
     scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    padding: 2rem 0.75rem 2.5rem;
+    padding: 3rem 1rem 4rem;
     scrollbar-width: none;
   }
   .video-reviews-grid::-webkit-scrollbar { display: none; }
@@ -2326,6 +2366,20 @@
     document.body.style.overflow = '';
     return false;
   }
+
+  // Hero parallax on scroll
+  (function() {
+    const avatarFrame = document.querySelector('.avatar-frame');
+    const heroBefore = document.querySelector('.hero');
+    const heroContent = document.querySelector('.hero-content');
+    function applyParallax() {
+      const y = window.scrollY;
+      if (y > window.innerHeight) return;
+      if (avatarFrame) avatarFrame.style.transform = `translateY(${y * 0.07}px)`;
+      if (heroContent) heroContent.style.transform = `translateY(${y * 0.03}px)`;
+    }
+    window.addEventListener('scroll', applyParallax, { passive: true });
+  })();
 
   // Video reviews carousel
   (function () {
