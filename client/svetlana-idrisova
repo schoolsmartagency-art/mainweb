@@ -46,21 +46,27 @@
     --page-padding: 5vw;
   }
 
-  /* NAV - glass/semi-transparent */
+  /* NAV - transparent over hero, glass once scrolled */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
-    background: rgba(255,252,244,0.72);
-    backdrop-filter: blur(18px) saturate(160%);
-    -webkit-backdrop-filter: blur(18px) saturate(160%);
-    border-bottom: 1px solid rgba(122,93,168,0.10);
-    box-shadow: 0 2px 20px rgba(122,93,168,0.06);
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    box-shadow: none;
     padding: 0 var(--page-padding);
     height: 64px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+  }
+  nav.scrolled {
+    background: rgba(255,252,244,0.72);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border-bottom: 1px solid rgba(122,93,168,0.10);
+    box-shadow: 0 2px 20px rgba(122,93,168,0.06);
   }
   .nav-logo {
     font-family: var(--font-display);
@@ -464,6 +470,90 @@
     color: white;
   }
 
+  /* FORMATS — staggered ladder layout */
+  .formats-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .format-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    width: 100%;
+  }
+  .format-row:nth-child(even) { flex-direction: row-reverse; margin-left: 8%; }
+  .format-row:nth-child(odd) { margin-right: 8%; }
+  .format-num {
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    color: var(--teal-200);
+    font-weight: 700;
+    line-height: 1;
+    min-width: 64px;
+  }
+  .format-card {
+    flex: 1;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem 2rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .format-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 36px rgba(122,93,168,0.16);
+  }
+  .format-row.featured .format-card {
+    background: var(--teal-400);
+    color: white;
+    border-color: var(--teal-400);
+  }
+  .format-row.featured .format-num { color: var(--teal-200); }
+  .format-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+  .format-card > p {
+    color: var(--text-soft);
+    font-weight: 300;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.1rem;
+  }
+  .format-row.featured .format-card > p { color: rgba(255,255,255,0.88); }
+  .format-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .format-features li {
+    font-size: 0.88rem;
+    color: var(--text-soft);
+    padding-left: 1.4rem;
+    position: relative;
+  }
+  .format-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--teal-400);
+    font-weight: 700;
+  }
+  .format-row.featured .format-features li { color: rgba(255,255,255,0.92); }
+  .format-row.featured .format-features li::before { color: white; }
+  .format-card .price-line { border-top: 1px solid var(--border); }
+  .format-row.featured .format-card .price-line { border-top-color: rgba(255,255,255,0.22); }
+  .format-row.featured .format-card .price-amount { color: white; }
+  .format-row.featured .format-card .price-duration { color: rgba(255,255,255,0.72); }
+
   /* HOW LESSONS WORK */
   .lessons-section {
     background: var(--teal-50);
@@ -640,7 +730,7 @@
     font-family: var(--font-body);
     font-size: 0.95rem;
     color: var(--text);
-    background: var(--bg);
+    background: white;
     transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
     outline: none;
     width: 100%;
@@ -675,7 +765,7 @@
     font-family: var(--font-body);
     font-size: 0.95rem;
     color: var(--text);
-    background: var(--bg);
+    background: white;
     cursor: pointer;
     text-align: left;
     transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
@@ -810,13 +900,19 @@
 
   /* POLICY MODAL */
   .policy-modal {
-    display: none;
     position: fixed;
     inset: 0;
     z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0s linear 0.25s;
   }
   .policy-modal.open {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 0.25s ease;
   }
   .policy-modal-overlay {
     position: absolute;
@@ -835,6 +931,13 @@
     padding: 2rem 1.75rem 1.75rem;
     overflow-y: auto;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    transform: scale(0.94) translateY(16px);
+    opacity: 0;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+  }
+  .policy-modal.open .policy-modal-dialog {
+    transform: scale(1) translateY(0);
+    opacity: 1;
   }
   .policy-modal-dialog h3 {
     font-size: 1.2rem;
@@ -906,12 +1009,23 @@
 
   /* DIPLOMA LIGHTBOX */
   .diploma-lightbox {
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: fixed;
     inset: 0;
     z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0s linear 0.25s;
   }
-  .diploma-lightbox.open { display: flex; align-items: center; justify-content: center; }
+  .diploma-lightbox.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 0.25s ease;
+  }
   .diploma-lightbox-overlay {
     position: absolute;
     inset: 0;
@@ -924,6 +1038,11 @@
     object-fit: contain;
     border-radius: 12px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    transform: scale(0.92);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .diploma-lightbox.open img {
+    transform: scale(1);
   }
   .diploma-lightbox-close {
     position: absolute;
@@ -1185,6 +1304,18 @@
     /* SERVICES */
     .services-grid { grid-template-columns: 1fr; }
 
+    /* FORMATS ladder — stack on mobile */
+    .format-row,
+    .format-row:nth-child(even),
+    .format-row:nth-child(odd) {
+      flex-direction: column;
+      margin-left: 0;
+      margin-right: 0;
+      gap: 0.75rem;
+    }
+    .format-num { font-size: 1.8rem; }
+    .format-card { padding: 1.5rem; width: 100%; }
+
     /* STEPS — vertical timeline on mobile */
     .steps-block { display: block; margin-top: 2.5rem; }
     .steps-grid {
@@ -1280,25 +1411,6 @@
   max-height: 6000px;
 }
 
-/* Полупрозрачный градиент — теперь начинается выше и короче */
-.reviews-fade-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100px; /* было 120 — короче, затемнение начинается выше */
-  background: linear-gradient(to bottom, rgba(245, 251, 250, 0) 0%, var(--bg) 85%);
-  pointer-events: none;
-  transition: opacity 0.4s ease;
-  z-index: 2;
-}
-
-/* Когда развернуто — затемнение исчезает */
-.reviews-photos-grid.expanded ~ .reviews-fade-overlay {
-  opacity: 0;
-  pointer-events: none;
-}
-
 .review-col {
   display: flex;
   flex-direction: column;
@@ -1306,7 +1418,7 @@
 }
 
 .review-photo-item {
-  background: var(--bg);
+  background: var(--teal-50);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
@@ -1329,7 +1441,7 @@
   font-size: 0.78rem;
   font-weight: 500;
   color: var(--teal-600);
-  background: linear-gradient(to bottom, transparent, var(--bg) 55%);
+  background: linear-gradient(to bottom, transparent, var(--teal-50) 55%);
   padding-top: 1.2rem;
   pointer-events: none;
 }
@@ -1385,27 +1497,33 @@
 }
 
 .reviews-cta .btn-outline {
-  border-color: var(--teal-400);
-  color: var(--teal-400);
-  background: rgba(255, 255, 255, 0.85); /* лёгкий белый фон, чтобы кнопка читалась на фоне картинок */
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  border: none;
+  color: white;
+  background: var(--teal-400);
   font-weight: 500;
   cursor: pointer;
-  padding: 0.7rem 1.8rem;
+  padding: 0.85rem 2.2rem;
   border-radius: 40px;
   font-size: 0.95rem;
   transition: all 0.2s;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  box-shadow: 0 2px 12px rgba(122,93,168,0.10);
+  gap: 0.5rem;
+  box-shadow: 0 4px 20px rgba(155,127,199,0.28);
+}
+
+.reviews-cta .btn-outline svg {
+  transition: transform 0.3s ease;
+}
+
+.reviews-cta .btn-outline.is-expanded svg {
+  transform: rotate(180deg);
 }
 
 .reviews-cta .btn-outline:hover {
-  background: var(--teal-50);
+  background: var(--teal-600);
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(122,93,168,0.15);
+  box-shadow: 0 6px 24px rgba(155,127,199,0.35);
 }
 
 /* Кнопка скрывается, когда развернуто */
@@ -1423,9 +1541,6 @@
   .review-col {
     gap: 0.85rem;
   }
-  .reviews-fade-overlay {
-    height: 80px;
-  }
   .reviews-cta {
     margin-top: 0.15rem;
   }
@@ -1439,20 +1554,11 @@
   .review-col {
     gap: 0.85rem;
   }
-  .reviews-fade-overlay {
-    height: 70px;
-  }
 }
 
   /* VIDEO REVIEWS */
   .video-reviews-section {
     margin-top: 3rem;
-  }
-  .video-reviews-title {
-    font-family: var(--font-display);
-    font-size: 1.4rem;
-    color: var(--text);
-    margin-bottom: 1.5rem;
   }
   .video-reviews-carousel {
     position: relative;
@@ -1466,7 +1572,7 @@
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    padding-bottom: 0.5rem;
+    padding: 1rem 0.5rem 1.5rem;
     scrollbar-width: none;
   }
   .video-reviews-grid::-webkit-scrollbar { display: none; }
@@ -1480,30 +1586,85 @@
     border: 2px solid var(--teal-100);
     box-shadow: var(--shadow);
     background: var(--teal-800);
-    break-inside: avoid;
-    margin-bottom: 1.5rem;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .video-review-wrap.playing {
+    transform: scale(1.1);
+    z-index: 5;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
   }
   .video-review-wrap iframe {
     width: 100%;
     height: 100%;
     display: block;
   }
-  .video-carousel-arrow {
-    flex: 0 0 auto;
-    width: 44px;
-    height: 44px;
+  .video-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 45%, rgba(0,0,0,0.7) 100%);
+    padding: 1rem 0.9rem;
+    transition: opacity 0.3s ease;
+  }
+  .video-review-wrap.playing .video-overlay {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .video-overlay-name {
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .video-overlay-name span {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 300;
+    opacity: 0.85;
+    margin-top: 0.15rem;
+  }
+  .video-play-btn {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 56px; height: 56px;
     border-radius: 50%;
-    border: 1px solid var(--border);
-    background: white;
+    border: none;
+    background: rgba(255,255,255,0.92);
     color: var(--teal-600);
-    box-shadow: var(--shadow);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background 0.2s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    transition: transform 0.2s, background 0.2s;
   }
-  .video-carousel-arrow:hover { background: var(--teal-50); }
+  .video-play-btn:hover { background: white; transform: translate(-50%, -50%) scale(1.08); }
+  .video-carousel-arrow {
+    flex: 0 0 auto;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: var(--teal-400);
+    color: white;
+    box-shadow: 0 4px 20px rgba(155,127,199,0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s, opacity 0.2s;
+  }
+  .video-carousel-arrow:hover { background: var(--teal-600); transform: translateY(-2px); }
+  .video-carousel-arrow:disabled {
+    opacity: 0.3;
+    cursor: default;
+    pointer-events: none;
+    transform: none;
+  }
 
   /* Bigger mobile photo */
   @media (max-width: 768px) {
@@ -1519,7 +1680,6 @@
     /* Video reviews carousel on mobile */
     .video-review-wrap { width: 170px; }
     .video-carousel-arrow { display: none; }
-    .video-reviews-title { font-size: 1.15rem; }
   }
   @media (max-width: 480px) {
     .reviews-photos-grid {
@@ -1708,7 +1868,6 @@
         <p class="review-text">Я студентка 4 курса «Лечебного дела» Медицинской академии КБГУ. В 2022 году сдала ЕГЭ по химии на 93 балла. Подготовку начала в 11 классе под чутким контролем Идрисовой Светланы Валерьевны. За год усердной работы мой результат вырос в 10 раз — первый пробный экзамен я написала на 9 баллов. Светлана Валерьевна — первоклассный преподаватель, прекрасный наставник, но в первую очередь она светлый человек, который заставит поверить в себя. Я убеждена, что именно её бесценная поддержка помогла мне сдать экзамен по химии на отлично!</p>
       </div>
   </div>
-  <div class="reviews-fade-overlay"></div>
 </div>
 
 <!-- Кнопка «Смотреть все отзывы» -->
@@ -1721,7 +1880,6 @@
 
   <!-- Video reviews -->
   <div class="video-reviews-section fade-in">
-    <h3 class="video-reviews-title">Видео-отзывы</h3>
     <div class="video-reviews-carousel">
       <button type="button" class="video-carousel-arrow" id="videoCarouselPrev" aria-label="Назад">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -1729,24 +1887,38 @@
       <div class="video-reviews-grid" id="videoCarouselTrack">
       <div class="video-review-wrap">
         <iframe src="https://player.vimeo.com/video/1205844507?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Хуранова Дарина, 73 балла, 2023 год"></iframe>
+        <div class="video-overlay"><div class="video-overlay-name">Хуранова Дарина<span>73 балла · 2023 год</span></div></div>
+        <button type="button" class="video-play-btn" aria-label="Воспроизвести"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
       </div>
       <div class="video-review-wrap">
         <iframe src="https://player.vimeo.com/video/1205844474?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Курданов Алан, 44 балла, 2025 год"></iframe>
+        <div class="video-overlay"><div class="video-overlay-name">Курданов Алан<span>44 балла · 2025 год</span></div></div>
+        <button type="button" class="video-play-btn" aria-label="Воспроизвести"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
       </div>
       <div class="video-review-wrap">
         <iframe src="https://player.vimeo.com/video/1205844464?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Жашуев Алан, 86 баллов, 2025 год"></iframe>
+        <div class="video-overlay"><div class="video-overlay-name">Жашуев Алан<span>86 баллов · 2025 год</span></div></div>
+        <button type="button" class="video-play-btn" aria-label="Воспроизвести"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
       </div>
       <div class="video-review-wrap">
         <iframe src="https://player.vimeo.com/video/1205844463?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Картлыкова Радима, 65 баллов, 2022 год"></iframe>
+        <div class="video-overlay"><div class="video-overlay-name">Картлыкова Радима<span>65 баллов · 2022 год</span></div></div>
+        <button type="button" class="video-play-btn" aria-label="Воспроизвести"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
       </div>
       <div class="video-review-wrap">
         <iframe src="https://player.vimeo.com/video/1205844358?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Бапинаева Налжан, 42 балла, 2025 год"></iframe>
+        <div class="video-overlay"><div class="video-overlay-name">Бапинаева Налжан<span>42 балла · 2025 год</span></div></div>
+        <button type="button" class="video-play-btn" aria-label="Воспроизвести"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
       </div>
       <div class="video-review-wrap">
         <iframe src="https://player.vimeo.com/video/1205844357?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Розикова Алина, 88 баллов, 2025 год"></iframe>
+        <div class="video-overlay"><div class="video-overlay-name">Розикова Алина<span>88 баллов · 2025 год</span></div></div>
+        <button type="button" class="video-play-btn" aria-label="Воспроизвести"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
       </div>
       <div class="video-review-wrap">
         <iframe src="https://player.vimeo.com/video/1205844356?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Видеоотзыв Егорова Анна, 51 балл, 2026 год"></iframe>
+        <div class="video-overlay"><div class="video-overlay-name">Егорова Анна<span>51 балл · 2026 год</span></div></div>
+        <button type="button" class="video-play-btn" aria-label="Воспроизвести"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
       </div>
       </div>
       <button type="button" class="video-carousel-arrow" id="videoCarouselNext" aria-label="Вперёд">
@@ -1770,7 +1942,6 @@
     <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-certificates.jpg" alt="Удостоверения о повышении квалификации"></div>
     <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-award-1.jpg" alt="Грамота"></div>
     <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-award-2.jpg" alt="Грамота"></div>
-    <div class="review-screenshot-card"><img src="images/svetlana-idrisova/diploma-group.jpg" alt="Дипломы"></div>
   </div>
 </section>
 
@@ -1780,41 +1951,74 @@
     <h2 class="section-title">Форматы работы</h2>
     <p class="section-sub">Занятия проходят онлайн — работаю с учениками из любого региона России</p>
   </div>
-  <div class="services-grid fade-in">
-    <div class="service-card">
-      <div class="service-tag">Химия • 9–11 класс</div>
-      <h3>Индивидуальные занятия</h3>
-      <p>Персональная программа под вашего ребёнка: от устранения пробелов до подготовки к ОГЭ и ЕГЭ на высокий балл.</p>
-      <div class="price-line">
-        <span class="price-amount">4 000 ₽</span>
-        <span class="price-duration">60 мин</span>
+  <div class="formats-list fade-in">
+    <div class="format-row featured">
+      <div class="format-num">01</div>
+      <div class="format-card">
+        <div class="service-tag">Популярно</div>
+        <h3>Пробное занятие</h3>
+        <p>Бесплатное знакомство: диагностика текущего уровня, обсуждение целей и подбор формата занятий — поймём, что нужно именно вашему ребёнку.</p>
+        <ul class="format-features">
+          <li>Диагностика текущего уровня знаний</li>
+          <li>Обсуждение целей — ОГЭ, ЕГЭ или школьная программа</li>
+          <li>Рекомендация формата и плана занятий</li>
+        </ul>
+        <div class="price-line">
+          <span class="price-amount">Бесплатно</span>
+          <span class="price-duration">занятие</span>
+        </div>
       </div>
     </div>
-    <div class="service-card featured">
-      <div class="service-tag">Популярно</div>
-      <h3>Пробное занятие</h3>
-      <p>Бесплатное знакомство: диагностика уровня, знакомство, обсуждение целей. Поймём, что нужно именно вашему ребёнку.</p>
-      <div class="price-line">
-        <span class="price-amount">Бесплатно</span>
-        <span class="price-duration">занятие</span>
+    <div class="format-row">
+      <div class="format-num">02</div>
+      <div class="format-card">
+        <div class="service-tag">Химия • 9–11 класс</div>
+        <h3>Индивидуальные занятия</h3>
+        <p>Персональная программа под вашего ребёнка: от устранения пробелов до подготовки к ОГЭ и ЕГЭ на высокий балл.</p>
+        <ul class="format-features">
+          <li>Программа адаптируется под темп и уровень ученика</li>
+          <li>Полное внимание преподавателя на занятии</li>
+          <li>Гибкое расписание, удобное время</li>
+          <li>Разбор ошибок и обратная связь после каждого занятия</li>
+        </ul>
+        <div class="price-line">
+          <span class="price-amount">4 000 ₽</span>
+          <span class="price-duration">60 мин</span>
+        </div>
       </div>
     </div>
-    <div class="service-card">
-      <div class="service-tag">Химия • 9–11 класс</div>
-      <h3>Занятия в паре</h3>
-      <p>Два ученика на занятии — совместная работа над задачами и более доступная цена.</p>
-      <div class="price-line">
-        <span class="price-amount">2 000 ₽</span>
-        <span class="price-duration">60 мин</span>
+    <div class="format-row">
+      <div class="format-num">03</div>
+      <div class="format-card">
+        <div class="service-tag">Химия • 9–11 класс</div>
+        <h3>Занятия в паре</h3>
+        <p>Два ученика на занятии — совместная работа над задачами, живое обсуждение и более доступная цена.</p>
+        <ul class="format-features">
+          <li>Подбор пары со схожим уровнем подготовки</li>
+          <li>Совместный разбор задач и дискуссия</li>
+          <li>Та же программа, что и в индивидуальном формате</li>
+        </ul>
+        <div class="price-line">
+          <span class="price-amount">2 000 ₽</span>
+          <span class="price-duration">60 мин</span>
+        </div>
       </div>
     </div>
-    <div class="service-card">
-      <div class="service-tag">Химия • 9–11 класс</div>
-      <h3>Мини-группа</h3>
-      <p>Небольшая группа — живое общение, совместное решение задач, самая доступная цена.</p>
-      <div class="price-line">
-        <span class="price-amount">1 000 ₽</span>
-        <span class="price-duration">60 мин</span>
+    <div class="format-row">
+      <div class="format-num">04</div>
+      <div class="format-card">
+        <div class="service-tag">Химия • 9–11 класс</div>
+        <h3>Мини-группа</h3>
+        <p>Небольшая группа — живое общение, совместное решение задач, самая доступная цена за занятие.</p>
+        <ul class="format-features">
+          <li>До 4–5 учеников в группе</li>
+          <li>Командный разбор сложных тем</li>
+          <li>Самая доступная цена за занятие</li>
+        </ul>
+        <div class="price-line">
+          <span class="price-amount">1 000 ₽</span>
+          <span class="price-duration">60 мин</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1974,6 +2178,15 @@
     setImage(document.getElementById('about-tutor-photo'), aboutPhoto, 'lazy');
   })();
 
+  // Nav background appears on scroll
+  const navEl = document.querySelector('nav');
+  function updateNavBg() {
+    if (!navEl) return;
+    navEl.classList.toggle('scrolled', window.scrollY > 40);
+  }
+  window.addEventListener('scroll', updateNavBg, { passive: true });
+  updateNavBg();
+
   // Burger menu
   const burger = document.getElementById('burger');
   const mobileMenu = document.getElementById('mobileMenu');
@@ -2131,9 +2344,33 @@
       const card = track.querySelector('.video-review-wrap');
       return card ? card.offsetWidth + 20 : 240;
     };
+    function updateArrowState() {
+      const max = track.scrollWidth - track.clientWidth - 2;
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= max;
+    }
     prev.addEventListener('click', () => track.scrollBy({ left: -scrollByCard(), behavior: 'smooth' }));
     next.addEventListener('click', () => track.scrollBy({ left: scrollByCard(), behavior: 'smooth' }));
+    track.addEventListener('scroll', updateArrowState, { passive: true });
+    window.addEventListener('resize', updateArrowState);
+    updateArrowState();
   })();
+
+  // Video reviews — play overlay, enlarge on play
+  document.querySelectorAll('.video-review-wrap').forEach(wrap => {
+    const btn = wrap.querySelector('.video-play-btn');
+    const iframe = wrap.querySelector('iframe');
+    if (!btn || !iframe) return;
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (wrap.classList.contains('playing')) return;
+      document.querySelectorAll('.video-review-wrap.playing').forEach(w => w.classList.remove('playing'));
+      if (!iframe.src.includes('autoplay=1')) {
+        iframe.src = iframe.src + '&autoplay=1';
+      }
+      wrap.classList.add('playing');
+    });
+  });
 
   // Review modal (full text popup)
   document.getElementById('reviewsPhotoGrid')?.addEventListener('click', (e) => {
@@ -2222,6 +2459,7 @@ if (toggleBtn && photoGrid && ctaWrapper) {
   toggleBtn.addEventListener('click', function() {
     expanded = !expanded;
     photoGrid.classList.toggle('expanded', expanded);
+    toggleBtn.classList.toggle('is-expanded', expanded);
 
     if (expanded) {
       // Развернуто — скрываем кнопку
