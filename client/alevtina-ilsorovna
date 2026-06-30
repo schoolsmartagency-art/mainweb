@@ -458,7 +458,7 @@
   .reviews-cta.hidden { display: none; }
 
   /* DIPLOMAS */
-  .diplomas-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+  .diplomas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
   .diploma-item {
     background: white;
     border: 1px solid var(--border);
@@ -943,7 +943,7 @@
 <section id="lessons" class="lessons-section">
   <div class="section-header fade-in">
     <h2 class="section-title">Как мы <em>начнём заниматься</em></h2>
-    <p class="section-sub">Простой путь от заявки до регулярных занятий — без видео-визитки, всё начинается с бесплатного пробного урока</p>
+    <p class="section-sub">Простой путь от заявки до регулярных занятий — всё начинается с бесплатного пробного урока</p>
   </div>
   <div class="steps-block fade-in">
     <div class="steps-grid">
@@ -1028,7 +1028,6 @@
     <div class="diploma-item" data-diploma="1"></div>
     <div class="diploma-item" data-diploma="2"></div>
     <div class="diploma-item" data-diploma="3"></div>
-    <div class="diploma-item" data-diploma="4"></div>
   </div>
 </section>
 
@@ -1108,6 +1107,8 @@
     </div>
     <div class="footer-links">
       <a href="#form">Записаться</a>
+      <a href="https://t.me/allacpl" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://vk.com/id471050181" target="_blank" rel="noopener">VK</a>
     </div>
   </div>
   <div class="footer-bottom">
