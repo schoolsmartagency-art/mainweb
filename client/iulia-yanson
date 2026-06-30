@@ -846,6 +846,71 @@
   }
   .consent-row.error label { color: #E24B4A; }
 
+  /* POLICY MODAL */
+  .policy-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+  }
+  .policy-modal.open {
+    display: block;
+  }
+  .policy-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 20, 18, 0.55);
+    backdrop-filter: blur(2px);
+  }
+  .policy-modal-dialog {
+    position: relative;
+    max-width: 640px;
+    width: calc(100% - 2.4rem);
+    max-height: calc(100vh - 4rem);
+    margin: 2rem auto;
+    background: var(--bg, #fff);
+    border-radius: 16px;
+    padding: 2rem 1.75rem 1.75rem;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  }
+  .policy-modal-dialog h3 {
+    font-size: 1.2rem;
+    margin: 0 0 0.4rem;
+    padding-right: 2rem;
+  }
+  .policy-modal-meta {
+    font-size: 0.8rem;
+    color: var(--text-soft);
+    margin: 0 0 1.2rem;
+  }
+  .policy-modal-body p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-soft);
+    margin-bottom: 0.9rem;
+  }
+  .policy-modal-body p:last-child {
+    margin-bottom: 0;
+  }
+  .policy-modal-body a {
+    color: var(--teal-600);
+    text-decoration: underline;
+  }
+  .policy-modal-close {
+    position: absolute;
+    top: 1.1rem;
+    right: 1.1rem;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--text-soft);
+    cursor: pointer;
+  }
+
   /* FOOTER */
   footer {
     background: var(--text);
@@ -1675,7 +1740,7 @@
     </div>
     <div class="consent-row">
       <input type="checkbox" id="consent" required>
-      <label for="consent">Согласен(на) на <a href="/politika" target="_blank" rel="noopener" onclick="return openPolicyPopup(event)">обработку персональных данных</a></label>
+      <label for="consent">Согласен(на) на <a href="#" onclick="return openPolicyModal(event)">обработку персональных данных</a></label>
     </div>
     <div class="form-submit">
       <button type="button" onclick="submitForm()">
@@ -1709,6 +1774,24 @@
 <div class="toast" id="toast">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
   Заявка отправлена! Свяжемся с вами сегодня.
+</div>
+
+<div class="policy-modal" id="policyModal">
+  <div class="policy-modal-overlay" onclick="closePolicyModal(event)"></div>
+  <div class="policy-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="policyModalTitle">
+    <button type="button" class="policy-modal-close" onclick="closePolicyModal(event)" aria-label="Закрыть">&times;</button>
+    <h3 id="policyModalTitle">Политика обработки персональных данных</h3>
+    <p class="policy-modal-meta">Юлия Янсон, репетитор по физике и математике · последнее обновление: 30 июня 2026 г.</p>
+    <div class="policy-modal-body">
+      <p>Настоящая Политика определяет порядок обработки и защиты персональных данных, которые Вы оставляете при заполнении формы записи на сайте, а также правила их использования.</p>
+      <p><strong>1. Какие данные собираются.</strong> Имя и фамилия ученика, класс, изучаемый предмет, цель занятий, имя и отчество родителя, номер телефона, адрес электронной почты — то есть данные, которые Вы добровольно указываете в форме.</p>
+      <p><strong>2. Цель обработки.</strong> Данные используются исключительно для связи с Вами, обсуждения формата и расписания занятий, проведения пробного урока и дальнейшего сотрудничества по репетиторству.</p>
+      <p><strong>3. Передача третьим лицам.</strong> Данные не передаются и не продаются третьим лицам, за исключением сервисов, технически обеспечивающих приём и хранение заявок (например, почтовые сервисы и мессенджеры, через которые Вы соглашаетесь получить ответ).</p>
+      <p><strong>4. Срок хранения.</strong> Данные хранятся не дольше, чем это необходимо для целей связи и организации занятий, и удаляются по Вашему запросу.</p>
+      <p><strong>5. Ваши права.</strong> Вы можете в любой момент запросить уточнение, блокировку или удаление своих данных, а также отозвать согласие на их обработку, написав в Telegram <a href="https://t.me/fizika_o_Jizni" target="_blank" rel="noopener noreferrer">@fizika_o_Jizni</a>.</p>
+      <p>Заполняя и отправляя форму на сайте, Вы подтверждаете своё согласие на обработку указанных персональных данных на условиях настоящей Политики.</p>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -1866,13 +1949,17 @@
 
   document.addEventListener('click', closeAllSelects);
 
-  // Policy popup
-  function openPolicyPopup(e) {
-    e.preventDefault();
-    const w = 720, h = 800;
-    const left = (window.screen.width - w) / 2;
-    const top = (window.screen.height - h) / 2;
-    window.open('/politika', 'policyPopup', `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+  // Policy modal
+  function openPolicyModal(e) {
+    if (e) e.preventDefault();
+    document.getElementById('policyModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    return false;
+  }
+  function closePolicyModal(e) {
+    if (e) e.preventDefault();
+    document.getElementById('policyModal').classList.remove('open');
+    document.body.style.overflow = '';
     return false;
   }
 
