@@ -872,7 +872,7 @@
     <h1>Грамотность и развитие интеллекта <br><em>без слёз и зубрёжки</em></h1>
     <p class="hero-desc">Скорочтение, ментальная арифметика, мнемотехника и русский язык для 1–4 классов. Подготовила более 750 учеников, преподаю онлайн, в том числе для учащихся билингвальной гимназии в Братиславе.</p>
     <div class="hero-photo-mobile">
-      <img id="hero-tutor-photo-mobile" src="images/alevtina-ilsorovna/tutor/hero.jpg" alt="Алевтина Ильсоровна — репетитор">
+      <img id="hero-tutor-photo-mobile" src="images/alevtina-ilsorovna/tutor/hero2.jpg" alt="Алевтина Ильсоровна — репетитор">
     </div>
     <div class="hero-btns">
       <a href="#form" class="btn-primary">Записаться на бесплатный урок</a>
@@ -891,7 +891,7 @@
       <div class="stat-badge"><strong>30+</strong><span>лет в педагогике</span></div>
     </div>
     <div class="avatar-frame">
-      <img id="hero-tutor-photo" class="avatar-photo" src="images/alevtina-ilsorovna/tutor/hero.jpg" alt="Алевтина Ильсоровна — репетитор">
+      <img id="hero-tutor-photo" class="avatar-photo" src="images/alevtina-ilsorovna/tutor/hero2.jpg" alt="Алевтина Ильсоровна — репетитор">
     </div>
     <div class="stat-badges right">
       <div class="stat-badge"><strong>4</strong><span>года на сервисе</span></div>
@@ -1168,7 +1168,7 @@
 <script>
   // Photos: drop files into the folders below with these exact names to replace placeholders.
   (function loadMedia() {
-    const heroPhoto = 'images/alevtina-ilsorovna/tutor/hero.jpg';
+    const heroPhoto = 'images/alevtina-ilsorovna/tutor/hero2.jpg';
     const aboutPhoto = 'images/alevtina-ilsorovna/tutor/about.jpg';
 
     function setImageWithFallback(img, url, initials, loading) {
