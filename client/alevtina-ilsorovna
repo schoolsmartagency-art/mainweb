@@ -176,7 +176,7 @@
     position: relative;
     border: 2px solid var(--blue-100);
   }
-  .avatar-photo { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; }
+  .avatar-photo { width: 100%; height: 100%; object-fit: cover; object-position: center 55%; display: block; }
   .avatar-fallback {
     width: 100%; height: 100%;
     display: flex; align-items: center; justify-content: center;
@@ -196,7 +196,7 @@
     border: 2px solid var(--blue-100);
     box-shadow: var(--shadow);
   }
-  .hero-photo-mobile img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; }
+  .hero-photo-mobile img { width: 100%; height: 100%; object-fit: cover; object-position: center 55%; display: block; }
 
   .stat-badges { position: absolute; display: flex; flex-direction: column; gap: 1rem; }
   .stat-badges.left { left: -30px; top: 50%; transform: translateY(-50%); }
@@ -802,6 +802,45 @@
 
   .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .fade-in.visible { opacity: 1; transform: none; }
+
+  /* LIGHTBOX */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(20,16,36,0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox-img {
+    max-width: min(90vw, 700px);
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    display: block;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 1.25rem; right: 1.5rem;
+    background: rgba(255,255,255,0.12);
+    border: none;
+    color: white;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+    line-height: 1;
+  }
+  .lightbox-close:hover { background: rgba(255,255,255,0.22); }
+  .review-photo-item img, .diploma-item img { cursor: zoom-in; }
 </style>
 </head>
 <body>
@@ -869,12 +908,11 @@
     </div>
     <div class="about-text">
       <h2 class="section-title">Подружим ребёнка<br><em>с русским языком навсегда</em></h2>
-      <p>Я педагог с высшим образованием, репетитор по русскому языку, скорочтению, ментальной арифметике и мнемотехнике — курсам развития интеллекта. За годы практики подготовила более 750 учеников, сейчас обучаю учащихся билингвальной гимназии за рубежом (Словакия, Братислава).</p>
+      <p>Педагог с высшим образованием и 30-летним стажем. Веду русский язык (1–4 класс), скорочтение, ментальную арифметику и мнемотехнику онлайн — в том числе для учеников билингвальной гимназии в Братиславе.</p>
       <div class="about-highlight">
         <p>«Правила — не зубрим, а понимаем через логику, образы и истории. Ребёнок не учит — он понимает, и поэтому не забывает.»</p>
       </div>
-      <p>Курс «Грамотность без слёз» для 1–4 классов закрывает все пробелы школьной программы: фонетика, орфография, морфемика, синтаксис и пунктуация, развитие речи — всё в игровой форме, в мини-группах до 6 человек, с постоянной обратной связью для родителей.</p>
-      <p>Параллельно веду курсы скорочтения, ментальной арифметики и мнемотехники — методики, которые развивают память, концентрацию и скорость мышления в любом возрасте.</p>
+      <p>Курс «Грамотность без слёз» закрывает все пробелы программы 1–4 класса: орфография, морфемика, пунктуация, развитие речи — в игровой форме, в мини-группах до 6 человек.</p>
     </div>
   </div>
 </section>
@@ -908,7 +946,6 @@
 <!-- REVIEWS -->
 <section id="reviews">
   <div class="section-header fade-in">
-    <span class="section-label">Отзывы</span>
     <h2 class="section-title">Что говорят <em>родители и ученики</em></h2>
     <p class="section-sub">Реальные отзывы — скриншоты переписок и оценок</p>
   </div>
@@ -982,7 +1019,6 @@
 <!-- SERVICES -->
 <section id="services">
   <div class="section-header fade-in">
-    <span class="section-label">Курсы</span>
     <h2 class="section-title">Программы обучения</h2>
     <p class="section-sub">Занятия проходят онлайн — индивидуально или в мини-группах до 6 человек</p>
   </div>
@@ -1020,7 +1056,6 @@
 <!-- DIPLOMAS -->
 <section id="diplomas">
   <div class="section-header fade-in">
-    <span class="section-label">Образование и квалификация</span>
     <h2 class="section-title">Дипломы <em>и сертификаты</em></h2>
     <p class="section-sub">ДГПИ (учитель русского языка и литературы), сертификаты IAMA по ментальной арифметике и скорочтению, мнемотехника, курсы Schoolsmart</p>
   </div>
@@ -1118,6 +1153,11 @@
 
 <div class="sticky-cta" id="stickyCta">
   <a href="#form" class="sticky-cta-btn">Записаться на пробный урок</a>
+</div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Закрыть">&#x2715;</button>
+  <img class="lightbox-img" id="lightboxImg" src="" alt="">
 </div>
 
 <div class="toast" id="toast">
@@ -1341,6 +1381,33 @@
     document.querySelectorAll('#form input, #form textarea').forEach(el => el.value = '');
     document.querySelectorAll('#form select').forEach(resetCustomSelect);
   }
+
+  // Lightbox
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxClose = document.getElementById('lightboxClose');
+
+  function openLightbox(src, alt) {
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || '';
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    lightboxImg.src = '';
+  }
+  if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+  if (lightbox) lightbox.addEventListener('click', function(e) { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+
+  document.addEventListener('click', function(e) {
+    const item = e.target.closest('.review-photo-item, .diploma-item');
+    if (!item) return;
+    const img = item.querySelector('img');
+    if (img) openLightbox(img.src, img.alt);
+  });
 
   // Toggle reviews
   const toggleBtn = document.getElementById('reviewsToggleBtn');
