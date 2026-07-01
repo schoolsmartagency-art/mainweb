@@ -1479,7 +1479,7 @@
 }
 
 .review-photo-item {
-  background: var(--white);
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
@@ -1502,7 +1502,7 @@
   font-size: 0.78rem;
   font-weight: 500;
   color: var(--teal-600);
-  background: linear-gradient(to bottom, transparent, var(--white) 55%);
+  background: linear-gradient(to bottom, transparent, var(--bg) 55%);
   padding-top: 1.2rem;
   pointer-events: none;
 }
