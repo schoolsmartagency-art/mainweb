@@ -31,7 +31,9 @@ id = "сюда_вставить_id"
 1. Cloudflare Dashboard → **Workers & Pages → Create → Import a Git repository**.
 2. Выбрать репозиторий `schoolsmartagency-art/mainweb`, нужную ветку.
 3. **Root directory**: `worker`
-4. **Build command**: оставить пустым
+4. **Build command**: `npm install` (в репозитории есть `package-lock.json`, поэтому Cloudflare
+   должна определить npm и сама выполнить install — но лучше указать явно: без него `npx wrangler deploy`
+   тянет wrangler ad-hoc и иногда падает с ошибкой `@cloudflare/workerd-linux-64 could not be found`)
 5. **Deploy command**: `npx wrangler deploy`
 6. Задеплоить. Cloudflare будет пересобирать Worker при каждом пуше в выбранную ветку (изменения статического сайта в других папках репо тоже триггерят билд — это ожидаемо, просто deploy пройдёт быстро и ничего не сломает).
 
