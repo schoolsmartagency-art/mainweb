@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cantor Agency — CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --orange: #E8650A;
+    --orange-light: #FFF3E8;
+    --orange-mid: #FDE4CC;
+    --orange-dark: #B84E06;
+    --text: #1A1A1A;
+    --text-2: #6B6B6B;
+    --text-3: #A0A0A0;
+    --border: #EBEBEB;
+    --bg: #F7F7F5;
+    --white: #FFFFFF;
+    --green-bg: #EDFAF3;
+    --green-text: #1A7A4A;
+    --green-border: #BEE9D2;
+    --yellow-bg: #FFF7DC;
+    --yellow-text: #8A6D00;
+    --yellow-border: #F0E2A3;
+    --red-bg: #FDECEC;
+    --red-text: #B3261E;
+    --red-border: #F5C2C0;
+    --radius: 12px;
+    --radius-sm: 6px;
+  }
+
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  header {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  .logo { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
+  .header-meta { font-size: 12px; color: var(--text-3); }
+
+  .tabsbar {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: sticky;
+    top: 56px;
+    z-index: 15;
+    overflow-x: auto;
+  }
+  .tabs { display: flex; gap: 4px; }
+  .tab {
+    display: flex; align-items: center; gap: 6px;
+    padding: 10px 14px;
+    font-size: 13px; font-weight: 500;
+    color: var(--text-2);
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--orange-dark); border-bottom-color: var(--orange); }
+  .tab-name { border-radius: 4px; padding: 0 3px; }
+  .tab-name.editing { outline: 1px solid var(--orange); background: var(--orange-light); }
+  .tab-del {
+    color: var(--text-3); font-size: 15px; line-height: 1; padding: 0 2px;
+    opacity: 0; transition: opacity .15s;
+  }
+  .tab:hover .tab-del { opacity: 1; }
+  .tab-del:hover { color: var(--red-text); }
+  .add-tab-btn {
+    border: none; background: none; color: var(--text-3);
+    font-size: 18px; width: 32px; height: 32px; border-radius: 8px; cursor: pointer;
+    flex-shrink: 0;
+  }
+  .add-tab-btn:hover { background: var(--orange-light); color: var(--orange); }
+
+  .main { padding: 24px 32px 48px; }
+
+  .empty-state {
+    display: none; flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px; padding: 100px 20px; color: var(--text-2);
+  }
+  .btn-primary {
+    background: var(--orange); color: white; border: none; border-radius: 8px;
+    padding: 10px 18px; font-size: 13px; font-weight: 500; cursor: pointer;
+  }
+  .btn-primary:hover { background: var(--orange-dark); }
+
+  .board { display: flex; gap: 16px; align-items: flex-start; overflow-x: auto; padding-bottom: 20px; }
+
+  .column {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    width: 280px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .column-head {
+    display: flex; align-items: center; gap: 6px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .column-name {
+    flex: 1; font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .05em; color: var(--text-2);
+    cursor: text; border-radius: 4px; padding: 2px 4px;
+  }
+  .column-name.editing { outline: 1px solid var(--orange); background: var(--orange-light); color: var(--text); text-transform: none; }
+  .column-count {
+    font-size: 11px; color: var(--text-3); background: var(--bg);
+    border: 1px solid var(--border); border-radius: 10px;
+    min-width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; padding: 0 5px;
+  }
+  .column-del { color: var(--text-3); cursor: pointer; font-size: 15px; padding: 0 2px; }
+  .column-del:hover { color: var(--red-text); }
+
+  .column-body {
+    display: flex; flex-direction: column; gap: 10px;
+    padding: 10px; min-height: 40px;
+  }
+  .column-body.dragover { background: var(--orange-light); }
+
+  .add-stage-btn {
+    width: 200px; flex-shrink: 0; align-self: flex-start;
+    border: 1px dashed var(--border); background: transparent; color: var(--text-3);
+    border-radius: var(--radius); padding: 12px; font-size: 12px; cursor: pointer;
+  }
+  .add-stage-btn:hover { border-color: var(--orange); color: var(--orange); }
+
+  .add-project-btn {
+    margin: 0 10px 10px; border: 1px dashed var(--border); background: transparent;
+    color: var(--text-3); border-radius: var(--radius-sm); padding: 8px; font-size: 11px; cursor: pointer;
+  }
+  .add-project-btn:hover { border-color: var(--orange); color: var(--orange); }
+
+  .project-card {
+    background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 10px; cursor: grab; display: flex; flex-direction: column; gap: 8px;
+  }
+  .project-card.dragging { opacity: .4; }
+  .project-card.color-green { background: var(--green-bg); border-color: var(--green-border); }
+  .project-card.color-yellow { background: var(--yellow-bg); border-color: var(--yellow-border); }
+  .project-card.color-red { background: var(--red-bg); border-color: var(--red-border); }
+
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; }
+  .project-name { font-size: 13px; font-weight: 600; cursor: text; border-radius: 4px; padding: 1px 3px; flex: 1; }
+  .project-name.editing { outline: 1px solid var(--orange); background: var(--white); }
+
+  .card-actions { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+  .color-dot {
+    width: 12px; height: 12px; border-radius: 50%; cursor: pointer; border: 1.5px solid transparent;
+    opacity: .5;
+  }
+  .color-dot:hover { opacity: 1; }
+  .color-dot.selected { opacity: 1; border-color: var(--text); }
+  .dot-green { background: #3FBE73; }
+  .dot-yellow { background: #E8B93F; }
+  .dot-red { background: #E24C4C; }
+  .card-del { color: var(--text-3); cursor: pointer; font-size: 15px; line-height: 1; }
+  .card-del:hover { color: var(--red-text); }
+
+  .card-meta { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-2); }
+  .meta-label { color: var(--text-3); }
+  .date-input {
+    border: 1px solid var(--border); border-radius: 4px; padding: 2px 4px; font-size: 11px;
+    font-family: inherit; color: var(--text); background: var(--white);
+  }
+
+  .section-label {
+    font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em;
+    color: var(--text-3); margin-top: 2px;
+  }
+
+  .task-row { display: flex; flex-direction: column; gap: 3px; position: relative; }
+  .past-tasks .task-row { padding-right: 16px; }
+  .task-row.current .task-row-inner {
+    background: var(--orange-light); border: 1px solid var(--orange-mid);
+    border-radius: 6px; padding: 5px 7px;
+  }
+  .task-row-inner { display: flex; align-items: center; gap: 6px; }
+  .task-text {
+    flex: 1; font-size: 12px; cursor: text; border-radius: 3px; padding: 1px 3px; min-height: 16px;
+  }
+  .task-text.editing { outline: 1px solid var(--orange); background: var(--white); }
+  .task-text:empty:before { content: attr(data-placeholder); color: var(--text-3); }
+  .days-input {
+    width: 40px; border: 1px solid var(--border); border-radius: 4px; padding: 2px 4px;
+    font-size: 11px; font-family: inherit; text-align: right; flex-shrink: 0;
+  }
+  .days-suffix { font-size: 10px; color: var(--text-3); flex-shrink: 0; }
+
+  .past-tasks { display: flex; flex-direction: column; gap: 6px; }
+  .task-rm {
+    position: absolute; right: 0; top: 2px; color: var(--text-3); font-size: 13px; cursor: pointer;
+  }
+  .task-rm:hover { color: var(--red-text); }
+  .add-task-btn {
+    align-self: flex-start; border: none; background: none; color: var(--text-3);
+    font-size: 11px; cursor: pointer; padding: 2px 0;
+  }
+  .add-task-btn:hover { color: var(--orange); }
+
+  .project-desc {
+    font-size: 12px; color: var(--text-2); cursor: text; border-radius: 4px; padding: 4px;
+    min-height: 18px; white-space: pre-wrap; border: 1px solid transparent;
+  }
+  .project-desc:hover { border-color: var(--border); }
+  .project-desc.placeholder { color: var(--text-3); font-style: italic; }
+  .project-desc-edit {
+    width: 100%; min-height: 50px; font-family: inherit; font-size: 12px; color: var(--text);
+    border: 1px solid var(--orange); border-radius: 4px; padding: 4px; resize: vertical;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    Cantor Agency
+  </div>
+  <div class="header-meta" id="savedIndicator">CRM</div>
+</header>
+
+<div class="tabsbar">
+  <div class="tabs" id="tabs"></div>
+  <button class="add-tab-btn" id="addDirBtn" title="Добавить направление">+</button>
+</div>
+
+<div class="main" id="main"></div>
+
+<div class="empty-state" id="emptyState">
+  <p>Пока нет ни одного направления.</p>
+  <button class="btn-primary" id="emptyAddBtn">+ Добавить направление</button>
+</div>
+
+<script>
+const API = '/api/board';
+let state = { directions: [] };
+let activeDirId = null;
+let saveTimer = null;
+
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
+async function init() {
+  try {
+    const res = await fetch(API);
+    state = await res.json();
+  } catch (e) {
+    state = { directions: [] };
+  }
+  if (!state.directions) state.directions = [];
+  if (state.directions.length) activeDirId = state.directions[0].id;
+  render();
+}
+
+function scheduleSave() {
+  setSavedIndicator('Сохранение…');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(doSave, 500);
+}
+
+async function doSave() {
+  try {
+    await fetch(API, {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(state),
+    });
+    setSavedIndicator('Сохранено');
+  } catch (e) {
+    setSavedIndicator('Ошибка сохранения');
+  }
+}
+
+function setSavedIndicator(text) {
+  document.getElementById('savedIndicator').textContent = text;
+}
+
+/* ---------- generic click-to-edit single-line span ---------- */
+function makeEditableSpan(initialText, onSave, opts = {}) {
+  const el = document.createElement('span');
+  el.className = 'editable' + (opts.className ? ' ' + opts.className : '');
+  el.textContent = initialText;
+  if (opts.placeholder) el.setAttribute('data-placeholder', opts.placeholder);
+  el.contentEditable = 'false';
+
+  el.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (el.contentEditable === 'true') return;
+    beginEdit();
+  });
+
+  function beginEdit() {
+    el.contentEditable = 'true';
+    el.classList.add('editing');
+    el.focus();
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    range.collapse(false);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+
+  el.addEventListener('blur', () => {
+    el.contentEditable = 'false';
+    el.classList.remove('editing');
+    const val = el.textContent.trim();
+    el.textContent = val;
+    onSave(val);
+  });
+
+  el.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
+    if (e.key === 'Escape') { e.preventDefault(); el.textContent = initialText; el.blur(); }
+  });
+
+  return el;
+}
+
+/* ---------- tabs ---------- */
+function renderTabs() {
+  const tabsEl = document.getElementById('tabs');
+  tabsEl.innerHTML = '';
+  state.directions.forEach(dir => {
+    const tab = document.createElement('div');
+    tab.className = 'tab' + (dir.id === activeDirId ? ' active' : '');
+
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'tab-name';
+    nameSpan.textContent = dir.name || 'Без названия';
+    nameSpan.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (dir.id !== activeDirId) {
+        activeDirId = dir.id;
+        render();
+        return;
+      }
+      startEditTab(nameSpan, dir);
+    });
+
+    const delBtn = document.createElement('span');
+    delBtn.className = 'tab-del';
+    delBtn.textContent = '×';
+    delBtn.title = 'Удалить направление';
+    delBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (confirm('Удалить направление «' + dir.name + '» со всеми проектами?')) {
+        state.directions = state.directions.filter(d => d.id !== dir.id);
+        if (activeDirId === dir.id) {
+          activeDirId = state.directions.length ? state.directions[0].id : null;
+        }
+        scheduleSave();
+        render();
+      }
+    });
+
+    tab.appendChild(nameSpan);
+    tab.appendChild(delBtn);
+    tab.addEventListener('click', () => {
+      if (dir.id !== activeDirId) { activeDirId = dir.id; render(); }
+    });
+    tabsEl.appendChild(tab);
+  });
+}
+
+function startEditTab(el, dir) {
+  const original = dir.name;
+  el.contentEditable = 'true';
+  el.classList.add('editing');
+  el.focus();
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+
+  const finish = () => {
+    el.contentEditable = 'false';
+    el.classList.remove('editing');
+    dir.name = el.textContent.trim() || 'Без названия';
+    el.textContent = dir.name;
+    scheduleSave();
+    el.removeEventListener('blur', finish);
+    el.removeEventListener('keydown', onKey);
+  };
+  const onKey = (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
+    if (e.key === 'Escape') { e.preventDefault(); el.textContent = original; el.blur(); }
+  };
+  el.addEventListener('blur', finish);
+  el.addEventListener('keydown', onKey);
+}
+
+/* ---------- board ---------- */
+function renderBoard() {
+  const main = document.getElementById('main');
+  const emptyState = document.getElementById('emptyState');
+  main.innerHTML = '';
+
+  if (!state.directions.length) {
+    emptyState.style.display = 'flex';
+    main.style.display = 'none';
+    return;
+  }
+  emptyState.style.display = 'none';
+  main.style.display = 'block';
+
+  const dir = state.directions.find(d => d.id === activeDirId);
+  if (!dir) { activeDirId = state.directions[0].id; return renderBoard(); }
+
+  const board = document.createElement('div');
+  board.className = 'board';
+
+  dir.stages.forEach(stage => {
+    board.appendChild(renderStageColumn(dir, stage));
+  });
+
+  const addStageBtn = document.createElement('button');
+  addStageBtn.className = 'add-stage-btn';
+  addStageBtn.textContent = '+ Этап';
+  addStageBtn.addEventListener('click', () => {
+    const newStage = { id: uid(), name: 'Новый этап' };
+    dir.stages.push(newStage);
+    scheduleSave();
+    render();
+    requestAnimationFrame(() => {
+      const el = document.querySelector('[data-stage-name-id="' + newStage.id + '"]');
+      if (el) el.click();
+    });
+  });
+  board.appendChild(addStageBtn);
+
+  main.appendChild(board);
+}
+
+function renderStageColumn(dir, stage) {
+  const col = document.createElement('div');
+  col.className = 'column';
+  col.dataset.stageId = stage.id;
+
+  const head = document.createElement('div');
+  head.className = 'column-head';
+
+  const nameEl = makeEditableSpan(stage.name, (val) => {
+    stage.name = val || 'Этап';
+    scheduleSave();
+  }, { className: 'column-name' });
+  nameEl.setAttribute('data-stage-name-id', stage.id);
+
+  const projectsInStage = dir.projects.filter(p => p.stageId === stage.id);
+
+  const count = document.createElement('span');
+  count.className = 'column-count';
+  count.textContent = projectsInStage.length;
+
+  const delBtn = document.createElement('span');
+  delBtn.className = 'column-del';
+  delBtn.textContent = '×';
+  delBtn.title = 'Удалить этап';
+  delBtn.addEventListener('click', () => {
+    if (projectsInStage.length) {
+      alert('Сначала перенесите или удалите проекты из этого этапа.');
+      return;
+    }
+    dir.stages = dir.stages.filter(s => s.id !== stage.id);
+    scheduleSave();
+    render();
+  });
+
+  head.appendChild(nameEl);
+  head.appendChild(count);
+  head.appendChild(delBtn);
+  col.appendChild(head);
+
+  const body = document.createElement('div');
+  body.className = 'column-body';
+  body.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    body.classList.add('dragover');
+  });
+  body.addEventListener('dragleave', () => body.classList.remove('dragover'));
+  body.addEventListener('drop', (e) => {
+    e.preventDefault();
+    body.classList.remove('dragover');
+    const projectId = e.dataTransfer.getData('text/plain');
+    const project = dir.projects.find(p => p.id === projectId);
+    if (project && project.stageId !== stage.id) {
+      project.stageId = stage.id;
+      scheduleSave();
+      render();
+    }
+  });
+
+  projectsInStage.forEach(project => {
+    body.appendChild(renderProjectCard(dir, project));
+  });
+  col.appendChild(body);
+
+  const addProjectBtn = document.createElement('button');
+  addProjectBtn.className = 'add-project-btn';
+  addProjectBtn.textContent = '+ Проект';
+  addProjectBtn.addEventListener('click', () => {
+    const newProject = {
+      id: uid(), name: 'Новый проект', stageId: stage.id, color: '',
+      launchDate: '', description: '',
+      currentTask: { text: '', days: null },
+      pastTasks: [],
+    };
+    dir.projects.push(newProject);
+    scheduleSave();
+    render();
+  });
+  col.appendChild(addProjectBtn);
+
+  return col;
+}
+
+function renderProjectCard(dir, project) {
+  const card = document.createElement('div');
+  card.className = 'project-card' + (project.color ? ' color-' + project.color : '');
+  card.draggable = true;
+  card.addEventListener('dragstart', (e) => {
+    e.dataTransfer.setData('text/plain', project.id);
+    requestAnimationFrame(() => card.classList.add('dragging'));
+  });
+  card.addEventListener('dragend', () => card.classList.remove('dragging'));
+
+  const top = document.createElement('div');
+  top.className = 'card-top';
+  const nameEl = makeEditableSpan(project.name, (val) => {
+    project.name = val || 'Без названия';
+    scheduleSave();
+  }, { className: 'project-name' });
+  top.appendChild(nameEl);
+
+  const actions = document.createElement('div');
+  actions.className = 'card-actions';
+  ['green', 'yellow', 'red'].forEach(c => {
+    const dot = document.createElement('span');
+    dot.className = 'color-dot dot-' + c + (project.color === c ? ' selected' : '');
+    dot.title = c === 'green' ? 'Отметить зелёным' : c === 'yellow' ? 'Отметить жёлтым' : 'Отметить красным';
+    dot.addEventListener('click', (e) => {
+      e.stopPropagation();
+      project.color = project.color === c ? '' : c;
+      scheduleSave();
+      render();
+    });
+    actions.appendChild(dot);
+  });
+  const delBtn = document.createElement('span');
+  delBtn.className = 'card-del';
+  delBtn.textContent = '×';
+  delBtn.title = 'Удалить проект';
+  delBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (confirm('Удалить проект «' + project.name + '»?')) {
+      dir.projects = dir.projects.filter(p => p.id !== project.id);
+      scheduleSave();
+      render();
+    }
+  });
+  actions.appendChild(delBtn);
+  top.appendChild(actions);
+  card.appendChild(top);
+
+  const meta = document.createElement('div');
+  meta.className = 'card-meta';
+  const dateLabel = document.createElement('span');
+  dateLabel.className = 'meta-label';
+  dateLabel.textContent = 'Запуск:';
+  const dateInput = document.createElement('input');
+  dateInput.type = 'date';
+  dateInput.className = 'date-input';
+  dateInput.value = project.launchDate || '';
+  dateInput.addEventListener('click', (e) => e.stopPropagation());
+  dateInput.addEventListener('change', () => {
+    project.launchDate = dateInput.value;
+    scheduleSave();
+  });
+  meta.appendChild(dateLabel);
+  meta.appendChild(dateInput);
+  card.appendChild(meta);
+
+  card.appendChild(renderTaskRow('Текущая задача', project.currentTask, (val) => {
+    project.currentTask.text = val;
+    scheduleSave();
+  }, (days) => {
+    project.currentTask.days = days;
+    scheduleSave();
+  }, true));
+
+  const pastWrap = document.createElement('div');
+  pastWrap.className = 'past-tasks';
+  const pastLabel = document.createElement('div');
+  pastLabel.className = 'section-label';
+  pastLabel.textContent = 'История задач';
+  pastWrap.appendChild(pastLabel);
+
+  project.pastTasks.forEach((task, idx) => {
+    const row = renderTaskRow(null, task, (val) => {
+      task.text = val;
+      scheduleSave();
+    }, (days) => {
+      task.days = days;
+      scheduleSave();
+    }, false);
+    const rmBtn = document.createElement('span');
+    rmBtn.className = 'task-rm';
+    rmBtn.textContent = '×';
+    rmBtn.title = 'Удалить задачу';
+    rmBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      project.pastTasks.splice(idx, 1);
+      scheduleSave();
+      render();
+    });
+    row.appendChild(rmBtn);
+    pastWrap.appendChild(row);
+  });
+
+  const addTaskBtn = document.createElement('button');
+  addTaskBtn.className = 'add-task-btn';
+  addTaskBtn.textContent = '+ Задача';
+  addTaskBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    project.pastTasks.push({ text: 'Новая задача', days: 0 });
+    scheduleSave();
+    render();
+  });
+  pastWrap.appendChild(addTaskBtn);
+  card.appendChild(pastWrap);
+
+  const descLabel = document.createElement('div');
+  descLabel.className = 'section-label';
+  descLabel.textContent = 'Описание';
+  card.appendChild(descLabel);
+  card.appendChild(renderDescription(project));
+
+  return card;
+}
+
+function renderTaskRow(label, task, onTextSave, onDaysSave, isCurrent) {
+  const row = document.createElement('div');
+  row.className = 'task-row' + (isCurrent ? ' current' : '');
+  if (label) {
+    const l = document.createElement('div');
+    l.className = 'section-label';
+    l.textContent = label;
+    row.appendChild(l);
+  }
+  const inner = document.createElement('div');
+  inner.className = 'task-row-inner';
+  const textEl = makeEditableSpan(task.text || '', onTextSave, { className: 'task-text', placeholder: 'Задача…' });
+  const daysInput = document.createElement('input');
+  daysInput.type = 'number';
+  daysInput.min = '0';
+  daysInput.className = 'days-input';
+  daysInput.value = task.days === null || task.days === undefined ? '' : task.days;
+  daysInput.placeholder = 'дн';
+  daysInput.addEventListener('click', (e) => e.stopPropagation());
+  daysInput.addEventListener('change', () => {
+    onDaysSave(daysInput.value === '' ? null : Number(daysInput.value));
+  });
+  inner.appendChild(textEl);
+  inner.appendChild(daysInput);
+  const daysLabel = document.createElement('span');
+  daysLabel.className = 'days-suffix';
+  daysLabel.textContent = 'дн.';
+  inner.appendChild(daysLabel);
+  row.appendChild(inner);
+  return row;
+}
+
+function renderDescription(project) {
+  const wrap = document.createElement('div');
+
+  function showView() {
+    wrap.innerHTML = '';
+    const view = document.createElement('div');
+    view.className = 'project-desc';
+    if (!project.description) {
+      view.classList.add('placeholder');
+      view.textContent = 'Добавить описание…';
+    } else {
+      view.textContent = project.description;
+    }
+    view.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showEdit();
+    });
+    wrap.appendChild(view);
+  }
+
+  function showEdit() {
+    wrap.innerHTML = '';
+    const ta = document.createElement('textarea');
+    ta.className = 'project-desc-edit';
+    ta.value = project.description || '';
+    ta.addEventListener('click', (e) => e.stopPropagation());
+    ta.addEventListener('blur', () => {
+      project.description = ta.value.trim();
+      scheduleSave();
+      showView();
+    });
+    wrap.appendChild(ta);
+    ta.focus();
+  }
+
+  showView();
+  return wrap;
+}
+
+function render() {
+  renderTabs();
+  renderBoard();
+}
+
+function addDirection() {
+  const newDir = { id: uid(), name: 'Новое направление', stages: [], projects: [] };
+  state.directions.push(newDir);
+  activeDirId = newDir.id;
+  scheduleSave();
+  render();
+}
+
+document.getElementById('addDirBtn').addEventListener('click', addDirection);
+document.getElementById('emptyAddBtn').addEventListener('click', addDirection);
+
+init();
+</script>
+</body>
+</html>
