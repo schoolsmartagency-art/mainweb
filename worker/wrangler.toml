@@ -1,4 +1,4 @@
-name = "cantor-crm"
+name = "mainweb"
 main = "src/index.js"
 compatibility_date = "2025-01-01"
 
