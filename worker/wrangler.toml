@@ -9,4 +9,4 @@ run_worker_first = true
 
 [[kv_namespaces]]
 binding = "BOARD_KV"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+id = "50d67357af744b47a142555b10eeb2cd"
